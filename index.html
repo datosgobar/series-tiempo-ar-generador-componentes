@@ -30,52 +30,128 @@
     <div class="container">
 
         <div class="index-header">
-            <h3 class="text-primary" id="validation-header">Validación de distribuciones de series de tiempo</h3>
+            <h3 class="text-primary" id="card-header">Formulario de previsualizacion Card</h3>
         </div>
-    <div class="col-md-8">
+        <div class="col-sm-8">
 
-        <form  action="" method="post">
+            <form  action="" method="post">
 
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 form-group item-form">
-                    <label for="catalog_url">URL del catálogo</label>
-                    <input type="text" class="form-control" name="catalog_url" required aria-required="true">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="catalog_url">URL del catálogo</label>
+                        <input type="text" class="form-control" name="catalog_url" required aria-required="true">
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 form-group item-form">
-                    <label>Formato</label><br>
-                    <select class="format form-control">
-                        <option value="json">JSON</option>
-                        <option value="xlsx">XLSX</option>
-                    </select>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label>Formato</label><br>
+                        <select class="format form-control">
+                            <option value="json">JSON</option>
+                            <option value="xlsx">XLSX</option>
+                        </select>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="exampleColorInput" class="form-label">Color picker</label>
+                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+                    </div>  
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="distribution_id">Identificador de distribución</label>
+                        <input type="text" class="form-control" name="distribution_id" required aria-required="true">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <input value="Generar HTML" type="button" class="btn btn-primary" onclick="makeRequest()">
+                    </div>
                 </div>
                 
+            </form>
+
+            <div class="col-md-8 col-md-offset-2 errors-container">
             </div>
 
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 form-group item-form">
-                    <label for="distribution_id">Identificador de distribución</label>
-                    <input type="text" class="form-control" name="distribution_id" required aria-required="true">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <input value="Validar" type="button" class="btn btn-primary" onclick="makeRequest()">
-                </div>
-            </div>
-            
-        </form>
-
-        <div class="col-md-8 col-md-offset-2 errors-container">
         </div>
+        <div class="col-sm-4"> Este espacio sera ocupado por la card
+            <div class="row-sm-8"> 
+                <pre class=" language-js">
+                    <code class=" language-js">window
+                    </code>
+                </pre>
+    
+            </div>
+        </div>
+       
 
     </div>
-    <div class="col-md-4"> Este espacio sera ocupado por la card
-        
-    </div>
+    <div class="container">
+
+        <div class="index-header">
+            <h3 class="text-primary" id="graph-header">Formulario de previsualizacion Graph</h3>
+        </div>
+        <div class="col-sm-8">
+
+            <form  action="" method="post">
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="catalog_url">URL del catálogo</label>
+                        <input type="text" class="form-control" name="catalog_url" required aria-required="true">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label>Formato</label><br>
+                        <select class="format form-control">
+                            <option value="json">JSON</option>
+                            <option value="xlsx">XLSX</option>
+                        </select>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="exampleColorInput" class="form-label">Color picker</label>
+                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+                    </div>  
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="distribution_id">Identificador de distribución</label>
+                        <input type="text" class="form-control" name="distribution_id" required aria-required="true">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <input value="Generar HTML" type="button" class="btn btn-primary" onclick="makeRequest()">
+                    </div>
+                </div>
+                
+            </form>
+
+            <div class="col-md-8 col-md-offset-2 errors-container">
+            </div>
+
+        </div>
+        <div class="col-sm-4"> Este espacio sera ocupado por el graph
+            <div class="row-sm-8"> 
+                <pre class=" language-js">
+                    <code class=" language-js">window
+                    </code>
+                </pre>
+    
+            </div>
+        </div>
     </div>
 
 </body>
