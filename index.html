@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="./css/styles.css"/>
 
     <script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/datosgobar/series-tiempo-ar-explorer@ts_components_2.9.0/dist/js/components.js'></script>
+
     <script type="text/javascript" src="./js/main.js"></script>
 </head>
 <body>
@@ -72,6 +74,7 @@
                         <input value="Generar HTML" type="button" class="btn btn-primary" onclick="makeRequest()">
                     </div>
                 </div>
+
                 
             </form>
 
@@ -79,13 +82,22 @@
             </div>
 
         </div>
-        <div class="col-sm-4"> Este espacio sera ocupado por la card
-            <div class="row-sm-8"> 
+        <div class="col-sm-4" > 
+            <div id="card_example"></div>
+            
+        </div>
+        <div class="row" id="__code_0">
+            <div class="col-sm-12"> 
                 <pre class=" language-js">
-                    <code class=" language-js">window
+                    <code class=" language-js">
+                        window.onload = function() {
+                            TSComponents.Card.render('tmi', {
+                                // ID de la serie solicitada
+                                serieId: '143.3_NO_PR_2004_A_21'
+                            })
+                        }
                     </code>
                 </pre>
-    
             </div>
         </div>
        
@@ -96,7 +108,7 @@
         <div class="index-header">
             <h3 class="text-primary" id="graph-header">Formulario de previsualizacion Graph</h3>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-12">
 
             <form  action="" method="post">
 
@@ -136,23 +148,35 @@
                         <input value="Generar HTML" type="button" class="btn btn-primary" onclick="makeRequest()">
                     </div>
                 </div>
-                
+
+                <div class="row   img-responsive" > 
+                    <div id="graph_example"></div>
+                    
+                </div>
             </form>
 
             <div class="col-md-8 col-md-offset-2 errors-container">
             </div>
 
-        </div>
-        <div class="col-sm-4"> Este espacio sera ocupado por el graph
-            <div class="row-sm-8"> 
-                <pre class=" language-js">
-                    <code class=" language-js">window
-                    </code>
-                </pre>
-    
+            <div class="row mx-auto" id="__code_0">
+                <div class="col-sm-12"> 
+                    <pre class=" language-js">
+                        <code class=" language-js">
+                            window.onload = function() {
+                                TSComponents.Card.render('tmi', {
+                                    // ID de la serie solicitada
+                                    serieId: '143.3_NO_PR_2004_A_21'
+                                })
+                            }
+                        </code>
+                    </pre>
+                </div>
             </div>
         </div>
+
+
     </div>
 
 </body>
+
 </html>

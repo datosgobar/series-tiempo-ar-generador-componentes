@@ -39,3 +39,21 @@ function makeRequest() {
 
     });
 }
+
+window.addEventListener("load", function() {
+
+    TSComponents.Card.render('card_example', {
+        serieId: '148.3_INIVELNAL_DICI_M_26:percent_change',
+        color: '#F9A822',
+        hasChart: 'small',
+        title: "Indice de Precios al Consumidor Nacional",
+        links: "none"
+    });
+
+    TSComponents.Graphic.render('graph_example', {
+        // Llamada a la API de Series de Tiempo
+        graphicUrl: 'https://apis.datos.gob.ar/series/api/series/?ids=tmi_arg',
+        title: 'Tasa de Mortalidad Infantil de Argentina',
+        source: 'Dirección de Estadística e Información en Salud (DEIS). Secretaría de Gobierno de Salud'
+    })
+})
