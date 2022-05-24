@@ -12,7 +12,7 @@
 
     <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/datosgobar/series-tiempo-ar-explorer@ts_components_2.9.0/dist/js/components.js'></script>
 
-    <script type="module"  src="./src/main.ts"></script>
+    <script type="module" name="mainScript"  src="./src/main.ts"></script>
 
 
 </head>
@@ -42,8 +42,8 @@
 
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
-                            <label for="series-id">Ingresar ID de la serie</label>
-                            <input onchange="formToJson()" type="text"  class="form-control" name="series-id" required aria-required="true">
+                            <label for="serieId">Ingresar ID de la serie</label>
+                            <input onchange="updateValuesCard" type="text"  class="form-control" name="serieId" required aria-required="true">
                               
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <div class="col-md-8 col-md-offset-2 form-group item-form"
                         data-toggle="tooltip" title="Representan qué _locale_ usar para formatear números, es decir, separadores de miles o de decimales.">
                             <label>Locale</label><br>
-                            <select class="format form-control">
+                            <select name="locale" class="format form-control">
                                 <option value="ar">AR</option>
                                 <option value="us">US</option>
                             </select>
@@ -74,7 +74,7 @@
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
                             <label>Tipo de gráfico</label><br>
-                            <select class="format form-control">
+                            <select name="hasChart" class="format form-control">
                                 <option value="full">full</option>
                                 <option value="small">small</option>
                             </select>
@@ -82,40 +82,40 @@
                     </div>
                     <div class="row form-group item-form">
                         <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" role="switch" id="explicitSign" />
+                            <input class="form-check-input" type="checkbox" role="switch" name="explicitSign" />
                             <label class="form-check-label" for="explicitSign">Signo explícito</label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
-                            <label for="card-title">Ingresar Título</label>
-                            <input type="text" class="form-control" name="card-title" >
+                            <label for="title">Ingresar Título</label>
+                            <input type="text" class="form-control" name="title" >
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
-                            <label for="card-source">Fuente </label>
-                            <input type="text" class="form-control" name="card-source" >
+                            <label for="source">Fuente </label>
+                            <input type="text" class="form-control" name="source" >
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
-                            <label for="card-units">Unidades </label>
-                            <input type="text" class="form-control" name="card-units" >
+                            <label for="units">Unidades </label>
+                            <input type="text" class="form-control" name="units" >
                         </div>
                     </div>
 
                     <div class="row form-group item-form">
                         <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" role="switch" id="hasFrame" />
+                            <input class="form-check-input" type="checkbox" role="switch" name="hasFrame" />
                             <label class="form-check-label" for="hasFrame">Marco alrededor de card</label>
                         </div>
                     </div>
                     <div class="row form-group item-form">
                         <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" role="switch" id="colorBar" />
+                            <input class="form-check-input" type="checkbox" role="switch" name="hasColorBar" />
                             <label class="form-check-label" for="colorBar">Barra de color</label>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
                             <label>Frecuencia temporal</label><br>
-                            <select class="format form-control">
+                            <select name="collapse" class="format form-control">
                                 <option value="day">Día</option>
                                 <option value="month">Mes</option>
                                 <option value="quarter">Trimestre</option>
@@ -134,39 +134,39 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
-                            <label for="card-series-apiBaseUrl">URL base </label>
-                            <input type="text" class="form-control" name="card-series-apiBaseUrl" >
+                            <label for="apiBaseUrl">URL base </label>
+                            <input type="text" class="form-control" name="apiBaseUrl" >
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
-                            <label for="card-series-decimals">Número de decimales </label>
-                            <input type="number" class="form-control" name="card-series-decimals" value="2">
+                            <label for="decimals">Número de decimales </label>
+                            <input type="number" class="form-control" name="decimals" value="2">
                         </div>
                     </div>
                     <div class="row form-group item-form">
                         <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" role="switch" id="card-numbersAbbreviate" checked />
-                            <label class="form-check-label" for="card-numbersAbbreviate">Abreviar números </label>
+                            <input class="form-check-input" type="checkbox" role="switch" name="numbersAbbreviate" checked />
+                            <label class="form-check-label" for="numbersAbbreviate">Abreviar números </label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
-                            <label for="card-billion-decimals">Número de decimales para numeros abreviados por un billón </label>
-                            <input type="number" class="form-control" name="card-billion-decimals" value="2">
+                            <label for="decimalsBillion">Número de decimales para numeros abreviados por un billón </label>
+                            <input type="number" class="form-control" name="decimalsBillion" value="2">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
-                            <label for="card-million-decimals">Número de decimales para número abreviados por un millón</label>
-                            <input type="number" class="form-control" name="card-million-decimals" value="2">
+                            <label for="decimalsMillion">Número de decimales para número abreviados por un millón</label>
+                            <input type="number" class="form-control" name="decimalsMillion" value="2">
                         </div>
                     </div>
 
                     <div class="row form-group item-form">
                         <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" role="switch" id="card-isPercentage"  />
-                            <label class="form-check-label" for="card-isPercentage">Valor porcentual </label>
+                            <input class="form-check-input" type="checkbox" role="switch" name="isPercentage"  />
+                            <label class="form-check-label" for="isPercentage">Valor porcentual </label>
                         </div>
                     </div>
 

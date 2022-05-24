@@ -5,6 +5,50 @@ const windowObject = window as any;
 const TSComponents = windowObject.TSComponents;
 
 let context:ComponentesContext;
+let defaultCardParameters:CardParameters= {
+    apiBaseUrl: "http://apis.datos.gob.ar/series/api",
+        collapse: "",
+        color: "#0072BB",
+        decimals: 2,
+        decimalsBillion: 2,
+        decimalsMillion: 2,
+        explicitSign: false,
+        hasChart: "small",
+        hasColorBar: undefined,
+        hasFrame: undefined,
+        isPercentage: undefined,
+        links: "full",
+        locale: "AR",
+        numbersAbbreviate: true,
+        serieId: "",
+        source: "",
+        title: "",
+        units: ""
+};
+const reloadComponents = function(){
+    console.log("entre en reload components")
+    TSComponents.Card.render('card_example', context.cardParameters);
+}
+const updateValueCard = function (elementName:keyof typeof context.cardParameters) {
+    const input = document.getElementsByName(elementName).item(0) as HTMLInputElement;
+    if(context.cardParameters) {
+        // context.cardParameters[elementName]  = input.value as any;
+    }
+}
+const updateValuesCard = function () {
+    const form:HTMLFormElement = document.getElementById("form-card") as HTMLFormElement;
+    const formData:FormData = new FormData(form);
+    formData.forEach(file=> console.log(file));
+    var object :any = {};
+    formData.forEach((value, key) => { object[key] = value});
+    let objectComponent : CardParameters =
+        {...context.cardParameters,
+            apiBaseUrl:object.apiBaseUrl?object.apiBaseUrl:defaultCardParameters.apiBaseUrl,
+            ...object};
+    console.log(objectComponent)
+    context.cardParameters = objectComponent;
+    reloadComponents();
+}
 windowObject.addEventListener("load", function() {
   console.log("entre en eventlistener load")
   // TSComponents.Card.render('card_example', {
@@ -26,50 +70,14 @@ windowObject.addEventListener("load", function() {
 
 
 const initializeComponents = function(){
-    context = {
-        cardParameters : {
-            apiBaseUrl: "http://apis.datos.gob.ar/series/api",
-            collapse: "",
-            color: "#0072BB",
-            decimals: 2,
-            decimalsBillion: 2,
-            decimalsMillion: 2,
-            explicitSign: false,
-            hasChart: "small",
-            hasColorBar: undefined,
-            hasFrame: undefined,
-            isPercentage: undefined,
-            links: "full",
-            locale: "AR",
-            numbersAbbreviate: true,
-            serieId: "",
-            source: "",
-            title: "",
-            units: ""
-        },
-        graphicParameters: undefined
+    if(!context) {
+        context = {
+            cardParameters:defaultCardParameters,
+            graphicParameters: undefined
 
+        }
     }
-    // reloadComponents();
+        // reloadComponents();
     updateValuesCard();
 }
-const reloadComponents = function(){
-    console.log("entre en reload components")
-    TSComponents.Card.render('card_example', context.cardParameters);
-}
-const updateValueCard = function (elementName:keyof typeof context.cardParameters) {
-    const input = document.getElementsByName(elementName).item(0) as HTMLInputElement;
-    if(context.cardParameters) {
-        // context.cardParameters[elementName]  = input.value as any;
-    }
-}
-const updateValuesCard = function () {
-    const form:HTMLFormElement = document.getElementById("form-card") as HTMLFormElement;
-    const formData = new FormData(form);
-    var object :any = {};
-    formData.forEach((value, key) => object[key] = value);
-    let objectComponent : CardParameters = object as CardParameters;
-    console.log(objectComponent)
-    context.cardParameters = objectComponent;
-    reloadComponents();
-}
+export {initializeComponents,updateValuesCard,reloadComponents}
