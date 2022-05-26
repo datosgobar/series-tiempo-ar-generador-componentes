@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
                             <label for="serieId">Ingresar ID de la serie</label>
-                            <input onchange="updateValuesCard" type="text"  class="form-control" name="serieId" required aria-required="true">
+                            <input  type="text"  class="form-control" name="serieId" required aria-required="true">
                               
                         </div>
                     </div>
@@ -53,8 +53,8 @@
                         data-toggle="tooltip" title="Representan qué _locale_ usar para formatear números, es decir, separadores de miles o de decimales.">
                             <label>Locale</label><br>
                             <select name="locale" class="format form-control">
-                                <option value="ar">AR</option>
-                                <option value="us">US</option>
+                                <option value="AR">AR</option>
+                                <option value="US">US</option>
                             </select>
                         </div>
                         
@@ -172,7 +172,7 @@
 
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 mt-2">
-                            <input value="Generar HTML" type="button" class="btn btn-primary" onclick="makeRequest()">
+                            <input value="Generar HTML" type="button" class="btn btn-primary" id="generateButton">
                         </div>
                     </div>
 

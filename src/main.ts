@@ -26,15 +26,11 @@ let defaultCardParameters:CardParameters= {
         units: ""
 };
 const reloadComponents = function(){
-    console.log("entre en reload components")
+    console.log("entre en reload components: estos son los cardParameters agraficar")
+    console.log(context.cardParameters)
     TSComponents.Card.render('card_example', context.cardParameters);
 }
-const updateValueCard = function (elementName:keyof typeof context.cardParameters) {
-    const input = document.getElementsByName(elementName).item(0) as HTMLInputElement;
-    if(context.cardParameters) {
-        // context.cardParameters[elementName]  = input.value as any;
-    }
-}
+
 const updateValuesCard = function () {
     const form:HTMLFormElement = document.getElementById("form-card") as HTMLFormElement;
     const formData:FormData = new FormData(form);
@@ -43,21 +39,22 @@ const updateValuesCard = function () {
     formData.forEach((value, key) => { object[key] = value});
     let objectComponent : CardParameters =
         {...context.cardParameters,
-            apiBaseUrl:object.apiBaseUrl?object.apiBaseUrl:defaultCardParameters.apiBaseUrl,
+            apiBaseUrl:(!object.apiBaseUrl)?object.apiBaseUrl:defaultCardParameters.apiBaseUrl,
             ...object};
     console.log(objectComponent)
     context.cardParameters = objectComponent;
     reloadComponents();
+
 }
 windowObject.addEventListener("load", function() {
   console.log("entre en eventlistener load")
-  // TSComponents.Card.render('card_example', {
-  //     serieId: '148.3_INIVELNAL_DICI_M_26:percent_change',
-  //     color: '#F9A822',
-  //     hasChart: 'small',
-  //     title: "Indice de Precios al Consumidor Nacional",
-  //     links: "none"
-  // });
+  TSComponents.Card.render('card_example', {
+      serieId: '148.3_INIVELNAL_DICI_M_26:percent_change',
+      color: '#F9A822',
+      hasChart: 'small',
+      title: "Indice de Precios al Consumidor Nacional",
+      links: "none"
+  });
   initializeComponents();
   TSComponents.Graphic.render('graph_example', {
       // Llamada a la API de Series de Tiempo
@@ -66,7 +63,6 @@ windowObject.addEventListener("load", function() {
       source: 'Dirección de Estadística e Información en Salud (DEIS). Secretaría de Gobierno de Salud'
   })
 })
-
 
 
 const initializeComponents = function(){
@@ -78,6 +74,9 @@ const initializeComponents = function(){
         }
     }
         // reloadComponents();
-    updateValuesCard();
+    const reloadButton:HTMLButtonElement = document.getElementById("generateButton") as HTMLButtonElement;
+    reloadButton?.addEventListener('click',function handleClick(event){
+        updateValuesCard();
+    })
 }
 export {initializeComponents,updateValuesCard,reloadComponents}
