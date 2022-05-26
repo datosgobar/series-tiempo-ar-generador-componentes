@@ -62,7 +62,11 @@
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
                             <label for="links">Links</label>
-                            <input type="text" class="form-control" name="links" required aria-required="false">
+                            <select name="links" class="format form-control">
+                                <option value="full">full</option>
+                                <option value="small">small</option>
+                                <option value="none">None</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
@@ -82,7 +86,7 @@
                     </div>
                     <div class="row form-group item-form">
                         <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" role="switch" name="explicitSign" />
+                            <input class="form-check-input" type="checkbox" role="switch" id="explicitSign" />
                             <label class="form-check-label" for="explicitSign">Signo explícito</label>
                         </div>
                     </div>
@@ -204,179 +208,179 @@
        
 
     </div>
-    <div class="container">
+<!--    <div class="container">-->
 
-        <div class="index-header">
-            <h3 class="text-primary" id="graph-header">Formulario de previsualizacion Graph</h3>
-        </div>
-        <div class="col-sm-12">
+<!--        <div class="index-header">-->
+<!--            <h3 class="text-primary" id="graph-header">Formulario de previsualizacion Graph</h3>-->
+<!--        </div>-->
+<!--        <div class="col-sm-12">-->
 
-            <form  action="" method="post">
+<!--            <form  action="" method="post">-->
 
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <label for="series-id">Ingresar ID de la serie</label>
-                        <input  type="text"  class="form-control" name="series-id" required aria-required="true">
-                          
-                    </div>
-                </div>
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <label for="series-id">Ingresar ID de la serie</label>-->
+<!--                        <input  type="text"  class="form-control" name="series-id" required aria-required="true">-->
+<!--                          -->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form"
-                    data-toggle="tooltip" title="Representan qué _locale_ usar para formatear números, es decir, separadores de miles o de decimales.">
-                        <label>Locale</label><br>
-                        <select class="format form-control">
-                            <option value="ar">AR</option>
-                            <option value="us">US</option>
-                        </select>
-                    </div>
-                    
-                </div>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <label for="links">Links</label>
-                        <input type="text" class="form-control" name="links" required aria-required="false">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <label for="exampleColorInput" class="form-label">Color picker</label>
-                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
-                    </div>  
-                </div>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <label>Tipo de gráfico</label><br>
-                        <select class="format form-control">
-                            <option value="full">full</option>
-                            <option value="small">small</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" role="switch" id="explicitSign" />
-                            <label class="form-check-label" for="explicitSign">Signo explícito</label>
-                        </div>
-                    </div>
-                </div>
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form"-->
+<!--                    data-toggle="tooltip" title="Representan qué _locale_ usar para formatear números, es decir, separadores de miles o de decimales.">-->
+<!--                        <label>Locale</label><br>-->
+<!--                        <select class="format form-control">-->
+<!--                            <option value="ar">AR</option>-->
+<!--                            <option value="us">US</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    -->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <label for="links">Links</label>-->
+<!--                        <input type="text" class="form-control" name="links" required aria-required="false">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <label for="exampleColorInput" class="form-label">Color picker</label>-->
+<!--                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">-->
+<!--                    </div>  -->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <label>Tipo de gráfico</label><br>-->
+<!--                        <select class="format form-control">-->
+<!--                            <option value="full">full</option>-->
+<!--                            <option value="small">small</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <div class="form-check form-switch ">-->
+<!--                            <input class="form-check-input" type="checkbox" role="switch" id="explicitSign" />-->
+<!--                            <label class="form-check-label" for="explicitSign">Signo explícito</label>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <label for="card-title">Ingresar Título</label>
-                        <input type="text" class="form-control" name="card-title" >
-                    </div>
-                </div>
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <label for="card-title">Ingresar Título</label>-->
+<!--                        <input type="text" class="form-control" name="card-title" >-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <label for="card-source">Fuente </label>
-                        <input type="text" class="form-control" name="card-source" >
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <label for="card-units">Unidades </label>
-                        <input type="text" class="form-control" name="card-units" >
-                    </div>
-                </div>
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <label for="card-source">Fuente </label>-->
+<!--                        <input type="text" class="form-control" name="card-source" >-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <label for="card-units">Unidades </label>-->
+<!--                        <input type="text" class="form-control" name="card-units" >-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="row form-group item-form">
-                    <div class="form-check form-switch ">
-                        <input class="form-check-input" type="checkbox" role="switch" id="hasFrame" />
-                        <label class="form-check-label" for="hasFrame">Marco alrededor de card</label>
-                    </div>
-                </div>
-                <div class="row form-group item-form">
-                    <div class="form-check form-switch ">
-                        <input class="form-check-input" type="checkbox" role="switch" id="colorBar" />
-                        <label class="form-check-label" for="colorBar">Barra de color</label>
-                    </div>
-                </div>
+<!--                <div class="row form-group item-form">-->
+<!--                    <div class="form-check form-switch ">-->
+<!--                        <input class="form-check-input" type="checkbox" role="switch" id="hasFrame" />-->
+<!--                        <label class="form-check-label" for="hasFrame">Marco alrededor de card</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="row form-group item-form">-->
+<!--                    <div class="form-check form-switch ">-->
+<!--                        <input class="form-check-input" type="checkbox" role="switch" id="colorBar" />-->
+<!--                        <label class="form-check-label" for="colorBar">Barra de color</label>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <label>Frecuencia temporal</label><br>
-                        <select class="format form-control">
-                            <option value="day">Día</option>
-                            <option value="month">Mes</option>
-                            <option value="quarter">Trimestre</option>
-                            <option value="semester">Semestre</option>
-                            <option value="year">Año</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <label for="card-series-apiBaseUrl">URL base </label>
-                        <input type="text" class="form-control" name="card-series-apiBaseUrl" >
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <label for="card-series-decimals">Número de decimales </label>
-                        <input type="number" class="form-control" name="card-series-decimals" value="2">
-                    </div>
-                </div>
-                <div class="row form-group item-form">
-                    <div class="form-check form-switch ">
-                        <input class="form-check-input" type="checkbox" role="switch" id="card-numbersAbbreviate" checked />
-                        <label class="form-check-label" for="card-numbersAbbreviate">Abreviar números </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <label for="card-billion-decimals">Número de decimales para numeros abreviados por un billón </label>
-                        <input type="number" class="form-control" name="card-billion-decimals" value="2">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 form-group item-form">
-                        <label for="card-million-decimals">Número de decimales para número abreviados por un millón</label>
-                        <input type="number" class="form-control" name="card-million-decimals" value="2">
-                    </div>
-                </div>
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <label>Frecuencia temporal</label><br>-->
+<!--                        <select class="format form-control">-->
+<!--                            <option value="day">Día</option>-->
+<!--                            <option value="month">Mes</option>-->
+<!--                            <option value="quarter">Trimestre</option>-->
+<!--                            <option value="semester">Semestre</option>-->
+<!--                            <option value="year">Año</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <label for="card-series-apiBaseUrl">URL base </label>-->
+<!--                        <input type="text" class="form-control" name="card-series-apiBaseUrl" >-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <label for="card-series-decimals">Número de decimales </label>-->
+<!--                        <input type="number" class="form-control" name="card-series-decimals" value="2">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="row form-group item-form">-->
+<!--                    <div class="form-check form-switch ">-->
+<!--                        <input class="form-check-input" type="checkbox" role="switch" id="card-numbersAbbreviate" checked />-->
+<!--                        <label class="form-check-label" for="card-numbersAbbreviate">Abreviar números </label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <label for="card-billion-decimals">Número de decimales para numeros abreviados por un billón </label>-->
+<!--                        <input type="number" class="form-control" name="card-billion-decimals" value="2">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 form-group item-form">-->
+<!--                        <label for="card-million-decimals">Número de decimales para número abreviados por un millón</label>-->
+<!--                        <input type="number" class="form-control" name="card-million-decimals" value="2">-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="row form-group item-form">
-                    <div class="form-check form-switch ">
-                        <input class="form-check-input" type="checkbox" role="switch" id="card-isPercentage"  />
-                        <label class="form-check-label" for="card-isPercentage">Valor porcentual </label>
-                    </div>
-                </div>
+<!--                <div class="row form-group item-form">-->
+<!--                    <div class="form-check form-switch ">-->
+<!--                        <input class="form-check-input" type="checkbox" role="switch" id="card-isPercentage"  />-->
+<!--                        <label class="form-check-label" for="card-isPercentage">Valor porcentual </label>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 mt-2">
-                        <input value="Generar HTML" type="button" class="btn btn-primary" onclick="makeRequest()">
-                    </div>
-                </div>
-                <div class="row   img-responsive" > 
-                    <div id="graph_example"></div>
-                    
-                </div>
-            </form>
+<!--                <div class="row">-->
+<!--                    <div class="col-md-8 col-md-offset-2 mt-2">-->
+<!--                        <input value="Generar HTML" type="button" class="btn btn-primary" onclick="makeRequest()">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="row   img-responsive" > -->
+<!--                    <div id="graph_example"></div>-->
+<!--                    -->
+<!--                </div>-->
+<!--            </form>-->
 
-            <div class="col-md-8 col-md-offset-2 errors-container">
-            </div>
+<!--            <div class="col-md-8 col-md-offset-2 errors-container">-->
+<!--            </div>-->
 
-            <div class="row mx-auto" id="__code_0">
-                <div class="col-sm-12"> 
-                    <pre class=" language-js">
-                        <code class=" language-js">
-                            window.onload = function() {
-                                TSComponents.Card.render('tmi', {
-                                    // ID de la serie solicitada
-                                    serieId: '143.3_NO_PR_2004_A_21'
-                                })
-                            }
-                        </code>
-                    </pre>
-                </div>
-            </div>
-        </div>
+<!--            <div class="row mx-auto" id="__code_0">-->
+<!--                <div class="col-sm-12"> -->
+<!--                    <pre class=" language-js">-->
+<!--                        <code class=" language-js">-->
+<!--                            window.onload = function() {-->
+<!--                                TSComponents.Card.render('tmi', {-->
+<!--                                    // ID de la serie solicitada-->
+<!--                                    serieId: '143.3_NO_PR_2004_A_21'-->
+<!--                                })-->
+<!--                            }-->
+<!--                        </code>-->
+<!--                    </pre>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
 
-    </div>
+<!--    </div>-->
 
 </body>
 

@@ -36,15 +36,34 @@ const updateValuesCard = function () {
     const formData:FormData = new FormData(form);
     formData.forEach(file=> console.log(file));
     var object :any = {};
-    formData.forEach((value, key) => { object[key] = value});
+    formData.forEach(
+        (value, key) =>
+        {
+            object[key] = value;
+            let elementById = document.getElementById(key);
+            let checkboxes = elementById as HTMLInputElement;
+            if(checkboxes?.checked){
+                object[key] = (checkboxes.checked);
+            }
+        });
     let objectComponent : CardParameters =
         {...context.cardParameters,
-            apiBaseUrl:(!object.apiBaseUrl)?object.apiBaseUrl:defaultCardParameters.apiBaseUrl,
-            ...object};
+            ...object,
+            apiBaseUrl:(object.apiBaseUrl)?object.apiBaseUrl:defaultCardParameters.apiBaseUrl,
+            // // traduzco el "on/off" de los checkboxes en true/false
+            // hasChart:(object['hasChart'])?object['hasChart']=='on'?true:false:undefined,
+            // hasColorBar:(object['hasColorBar'])?object['hasColorBar']=='on'?true:false:undefined,
+            // hasFrame:(object['hasFrame'])?object['hasFrame']=='on'?true:false:undefined,
+            // isPercentage:(object['isPercentage'])?object['isPercentage']=='on'?true:false:undefined,
+        };
     console.log(objectComponent)
-    context.cardParameters = objectComponent;
+
+    context.cardParameters = filterAllFalsyValues(objectComponent);
     reloadComponents();
 
+}
+const filterAllFalsyValues = function(obj:any){
+   return  Object.entries(obj).reduce((a:any,[k,v]) => (v ? (a[k]=v, a) : a), {});
 }
 windowObject.addEventListener("load", function() {
   console.log("entre en eventlistener load")
