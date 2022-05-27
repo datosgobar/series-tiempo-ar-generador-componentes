@@ -95,11 +95,11 @@ function updateValuesCard () {
 // })
 
 function generateCardHTML() {
-     const text = "window.onload = function() {\n" +
-         "TSComponents.Card.render('tmi', {\n" +
-         "// ID de la serie solicitada\n" +
-         " serieId: '"+context.cardParameters?.serieId+"'\n" +
-         " })\n" +
+     const text = "\nwindow.onload = function() {\n" +
+         "  TSComponents.Card.render('tmi', {\n" +
+         "  // ID de la serie solicitada\n" +
+         "  serieId: '"+context.cardParameters?.serieId+"'\n" +
+         "     })\n" +
          "}";
      let codeTag = document.getElementById('codeTagCard');
          if(codeTag){
