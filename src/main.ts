@@ -1,6 +1,6 @@
 import "../node_modules/ar-poncho/dist/css/poncho.min.css"
 import "../node_modules/ar-poncho/dist/icono-arg.css"
-import {CardParameters, ComponentesContext, GraphicParameters} from "./model/models";
+import {CardParameters, ComponentesContext} from "./model/models";
 const windowObject = window as any;
 const TSComponents = windowObject.TSComponents;
 
@@ -25,16 +25,28 @@ let defaultCardParameters:CardParameters= {
         title: "",
         units: ""
 };
-const reloadComponents = function(){
+ export function reRenderCardComponent  () {
     console.log("entre en reload components: estos son los cardParameters agraficar")
     console.log(context.cardParameters)
-    TSComponents.Card.render('card_example', context.cardParameters);
+     
+     TSComponents.Card.render('card_example', context.cardParameters);
+
+        //     .then(
+        //     (error:any)=>{
+        //         console.log(error)
+        //     }
+        // );
+
+    // .catch(
+    // (error:PromiseRejectedResult)=>{
+    //     context.errorMap.set("serieId",error.reason);
+    // }
+    // );
 }
 
-const updateValuesCard = function () {
+function updateValuesCard () {
     const form:HTMLFormElement = document.getElementById("form-card") as HTMLFormElement;
     const formData:FormData = new FormData(form);
-    formData.forEach(file=> console.log(file));
     var object :any = {};
     formData.forEach(
         (value, key) =>
@@ -56,46 +68,62 @@ const updateValuesCard = function () {
             // hasFrame:(object['hasFrame'])?object['hasFrame']=='on'?true:false:undefined,
             // isPercentage:(object['isPercentage'])?object['isPercentage']=='on'?true:false:undefined,
         };
-    console.log(objectComponent)
 
     context.cardParameters = filterAllFalsyValues(objectComponent);
-    reloadComponents();
+    reRenderCardComponent();
 
 }
-const filterAllFalsyValues = function(obj:any){
+ function filterAllFalsyValues(obj:any){
    return  Object.entries(obj).reduce((a:any,[k,v]) => (v ? (a[k]=v, a) : a), {});
 }
-windowObject.addEventListener("load", function() {
-  console.log("entre en eventlistener load")
-  TSComponents.Card.render('card_example', {
-      serieId: '148.3_INIVELNAL_DICI_M_26:percent_change',
-      color: '#F9A822',
-      hasChart: 'small',
-      title: "Indice de Precios al Consumidor Nacional",
-      links: "none"
-  });
-  initializeComponents();
-  TSComponents.Graphic.render('graph_example', {
-      // Llamada a la API de Series de Tiempo
-      graphicUrl: 'https://apis.datos.gob.ar/series/api/series/?ids=tmi_arg',
-      title: 'Tasa de Mortalidad Infantil de Argentina',
-      source: 'Dirección de Estadística e Información en Salud (DEIS). Secretaría de Gobierno de Salud'
-  })
-})
+// windowObject.addEventListener("load", function() {
+//   console.log("entre en eventlistener load")
+//   // TSComponents.Card.render('card_example', {
+//   //     serieId: '148.3_INIVELNAL_DICI_M_26:percent_change',
+//   //     color: '#F9A822',
+//   //     hasChart: 'small',
+//   //     title: "Indice de Precios al Consumidor Nacional",
+//   //     links: "none"
+//   // });
+//   initializeComponents();
+//   TSComponents.Graphic.render('graph_example', {
+//       // Llamada a la API de Series de Tiempo
+//       graphicUrl: 'https://apis.datos.gob.ar/series/api/series/?ids=tmi_arg',
+//       title: 'Tasa de Mortalidad Infantil de Argentina',
+//       source: 'Dirección de Estadística e Información en Salud (DEIS). Secretaría de Gobierno de Salud'
+//   })
+// })
 
-
-const initializeComponents = function(){
+function generateCardHTML() {
+     const text = "window.onload = function() {\n" +
+         "TSComponents.Card.render('tmi', {\n" +
+         "// ID de la serie solicitada\n" +
+         " serieId: '"+context.cardParameters?.serieId+"'\n" +
+         " })\n" +
+         "}";
+     let codeTag = document.getElementById('codeTagCard');
+         if(codeTag){
+             codeTag.textContent = text;
+         }
+}
+function initializeComponents() {
     if(!context) {
         context = {
             cardParameters:defaultCardParameters,
-            graphicParameters: undefined
+            graphicParameters: undefined,
+            errorMap: new Map<keyof CardParameters, string>(),
 
         }
     }
         // reloadComponents();
-    const reloadButton:HTMLButtonElement = document.getElementById("generateButton") as HTMLButtonElement;
-    reloadButton?.addEventListener('click',function handleClick(event){
+    const reloadButton:HTMLButtonElement = document.getElementById("previewButton") as HTMLButtonElement;
+    reloadButton?.addEventListener('click',function handleClick(){
         updateValuesCard();
     })
+    const generateCardHtmlButton:HTMLButtonElement = document.getElementById("generateCardHTML") as HTMLButtonElement;
+    generateCardHtmlButton?.addEventListener('click',function handleClick(){
+        generateCardHTML();
+    })
 }
-export {initializeComponents,updateValuesCard,reloadComponents}
+initializeComponents();
+export {initializeComponents,updateValuesCard,filterAllFalsyValues,generateCardHTML}
