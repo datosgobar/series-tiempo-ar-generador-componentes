@@ -25,6 +25,6 @@ interface CardParameters {
 interface ComponentesContext {
     graphicParameters:GraphicParameters|undefined;
     cardParameters:CardParameters|undefined;
-    errorMap: Map<keyof CardParameters,string>;
+    errorMap: Array<{error:string }>;
 }
 export type {ComponentesContext,GraphicParameters,CardParameters};

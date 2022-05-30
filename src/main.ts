@@ -1,9 +1,13 @@
 import "../node_modules/ar-poncho/dist/css/poncho.min.css"
 import "../node_modules/ar-poncho/dist/icono-arg.css"
 import {CardParameters, ComponentesContext} from "./model/models";
+import axios from 'axios';
+import {AxiosResponse} from 'axios';
+
+
 const windowObject = window as any;
 const TSComponents = windowObject.TSComponents;
-
+const API_SERIES_URL:string = "https://apis.datos.gob.ar/series/api/series/";
 let context:ComponentesContext;
 let defaultCardParameters:CardParameters= {
     apiBaseUrl: "http://apis.datos.gob.ar/series/api",
@@ -44,6 +48,11 @@ let defaultCardParameters:CardParameters= {
     // );
 }
 
+function clearErrorMap() {
+    context.errorMap= [];
+    // updateErrorContainer('');
+}
+
 function updateValuesCard () {
     const form:HTMLFormElement = document.getElementById("form-card") as HTMLFormElement;
     const formData:FormData = new FormData(form);
@@ -70,7 +79,23 @@ function updateValuesCard () {
         };
 
     context.cardParameters = filterAllFalsyValues(objectComponent);
-    reRenderCardComponent();
+    validateSeries(context.cardParameters?.serieId as string,context.cardParameters?.collapse as string)
+        .then(
+            ()=>{
+                reRenderCardComponent();
+                clearErrorMap();
+            }
+        )
+        .catch(
+            (error)=>{
+                context.errorMap = error.response.data.errors;
+                // console.log(context.errorMap.values('\n'));
+                let oneStringErrors:string='' ;
+                context.errorMap.forEach((value)=>{oneStringErrors+='\n'+value.error});
+                updateErrorContainer(oneStringErrors);
+            }
+            );
+
 
 }
  function filterAllFalsyValues(obj:any){
@@ -111,7 +136,7 @@ function initializeComponents() {
         context = {
             cardParameters:defaultCardParameters,
             graphicParameters: undefined,
-            errorMap: new Map<keyof CardParameters, string>(),
+            errorMap: new Array<string>()
 
         }
     }
@@ -125,5 +150,14 @@ function initializeComponents() {
         generateCardHTML();
     })
 }
+function validateSeries(seriesId:string,collapse:string): Promise<AxiosResponse<any, any>>{
+     return axios.get(API_SERIES_URL,{params:{ids:seriesId , collapse:collapse,collapse_aggregation:'sum'}});
+}
+function updateErrorContainer(errorString:string){
+    let errorDiv = document.getElementById('error-container');
+    if(errorDiv){
+        errorDiv.textContent = errorString ;
+    }
+}
 initializeComponents();
-export {initializeComponents,updateValuesCard,filterAllFalsyValues,generateCardHTML}
+export {initializeComponents,updateValuesCard,filterAllFalsyValues,generateCardHTML,validateSeries,updateErrorContainer}
