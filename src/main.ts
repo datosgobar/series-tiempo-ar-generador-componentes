@@ -120,31 +120,7 @@ function updateValuesCard () {
 // })
 
 function generateCardHTML() {
-    TSComponents.Card.render('card_example',
-//   {
-//   //     serieId: '148.3_INIVELNAL_DICI_M_26:percent_change',
-//   //     color: '#F9A822',
-//   //     hasChart: 'small',
-//   //     title: "Indice de Precios al Consumidor Nacional",
-//   //     links: "none"
-//   // }
-        {
-            "apiBaseUrl": "http://apis.datos.gob.ar/series/api",
-            "collapse": "semester",
-            "color": "#563d7c",
-            "decimals": "2",
-            "decimalsBillion": "2",
-            "decimalsMillion": "2",
-            "hasChart": "small",
-            "links": "none",
-            "locale": "US",
-            "numbersAbbreviate": true,
-            "serieId": "148.3_INIVELNAL_DICI_M_26",
-            "source": "full",
-            "title": "as",
-            "units": "1"
-        }
-    );
+
     let html:string ="<pre>\n" +
         "<span class='c'>&lt;!-- código HTML donde ubicar un div con una tarjeta --&gt;</span>\n" +
         "<span class='p'>&lt;</span>" +
