@@ -17,14 +17,14 @@ let defaultCardParameters:CardParameters= {
         decimalsMillion: 2,
         explicitSign: false,
         hasChart: "small",
-        hasColorBar: undefined,
-        hasFrame: undefined,
-        isPercentage: undefined,
+        hasColorBar: false,
+        hasFrame: false,
+        isPercentage: false,
         links: "full",
         locale: "AR",
-        numbersAbbreviate: true,
-        serieId: "",
-        source: "",
+        numbersAbbreviate: false,//  en realidad el default es true para este campo, pero si aca pongo true no habria manera de desactivarlo, ya que solo se genera un par (key,value)
+        serieId: "",                // en el form cuando el checkbox esta en checked. Entonces lo dejo checked por default en html y aca en false, cosa que si lo uncheckean
+        source: "",                 // no aparece en los (key,value) y por lo tanto queda este valor
         title: "",
         units: ""
 };
@@ -56,21 +56,16 @@ function updateValuesCard () {
         (value, key) =>
         {
             object[key] = value;
-            let elementById = document.getElementById(key);
+            let elementById = document.getElementsByName(key)?.item(0);
             let checkboxes = elementById as HTMLInputElement;
             if(checkboxes?.checked){
                 object[key] = (checkboxes.checked);
             }
         });
     let objectComponent : CardParameters =
-        {...context.cardParameters,
+        {...defaultCardParameters,
             ...object,
             apiBaseUrl:(object.apiBaseUrl)?object.apiBaseUrl:defaultCardParameters.apiBaseUrl,
-            // // traduzco el "on/off" de los checkboxes en true/false
-            // hasChart:(object['hasChart'])?object['hasChart']=='on'?true:false:undefined,
-            // hasColorBar:(object['hasColorBar'])?object['hasColorBar']=='on'?true:false:undefined,
-            // hasFrame:(object['hasFrame'])?object['hasFrame']=='on'?true:false:undefined,
-            // isPercentage:(object['isPercentage'])?object['isPercentage']=='on'?true:false:undefined,
         };
 
     context.cardParameters = filterAllFalsyValues(objectComponent);
@@ -97,7 +92,10 @@ function updateValuesCard () {
 
 }
  function filterAllFalsyValues(obj:any){
-   return  Object.entries(obj).reduce((a:any,[k,v]) => (v ? (a[k]=v, a) : a), {});
+
+   return  Object.entries(obj).reduce(
+       (a:any,[k,v]) => (!(v!==false&&(v==undefined||v=="")) ? (a[k]=v, a) : a)
+       , {});
 }
 // windowObject.addEventListener("load", function() {
 //   console.log("entre en eventlistener load")
