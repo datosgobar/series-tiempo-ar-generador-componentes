@@ -94,7 +94,7 @@ function updateValuesCard () {
 }
 function filterDefaultValues(){
     outputCardParameters = Object.assign({},context.cardParameters); //arranco con los values actuales
-    const mapDefault = new Map (Object.entries(defaultCardParameters));
+    const mapDefault = new Map (Object.entries({...defaultCardParameters,numbersAbbreviate:true}));//  el valor por default de numbAbb es true, pero esta seteado en false arriba por practicidad (ver comentario arriba)
     let mapOutput = new Map (Object.entries(outputCardParameters));
     let htmlOutputForNotDefaultProps:string=""
     mapOutput.forEach((value,key,map)=>{
