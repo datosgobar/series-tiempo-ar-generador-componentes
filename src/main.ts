@@ -92,7 +92,7 @@ function updateValuesCard () {
 
 
 }
-function filterDefaultValues(){
+function HTMLRowsForNotDefaultParameters(){
     outputCardParameters = Object.assign({},context.cardParameters); //arranco con los values actuales
     const mapDefault = new Map (Object.entries({...defaultCardParameters,numbersAbbreviate:true}));//  el valor por default de numbAbb es true, pero esta seteado en false arriba por practicidad (ver comentario arriba)
     let mapOutput = new Map (Object.entries(outputCardParameters));
@@ -118,7 +118,6 @@ function filterDefaultValues(){
 }
 
 function generateCardHTML() {
-    filterDefaultValues();
     let html:string ="<pre>\n" +
         "<span class='c'>&lt;!-- código HTML donde ubicar un div con una tarjeta --&gt;</span>\n" +
         "<span class='p'>&lt;</span>" +
@@ -148,44 +147,7 @@ function generateCardHTML() {
         "<span class='s1'>'tmi'</span>" +
         "<span class='p'>,</span> "+
         "<span class='p'>{</span>\n            " +
-        filterDefaultValues() +
-        // "<span class='c1'>// ID de la serie solicitada</span>\n            " +
-        // "<span class='nx'>serieId</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.serieId+"',</span>\n            " +
-        // "<span class='nx'>locale</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.locale+"',</span>\n            " +
-        // "<span class='nx'>links</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.links+"',</span>\n            " +
-        // "<span class='nx'>color</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.color+"',</span>\n            " +
-        // "<span class='nx'>hasChart</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.hasChart+"',</span>\n            " +
-        // "<span class='nx'>explicitSign</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.explicitSign+"',</span>\n            " +
-        // "<span class='nx'>title</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.title+"',</span>\n            " +
-        // "<span class='nx'>source</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.source+"',</span>\n            " +
-        // "<span class='nx'>units</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.units+"',</span>\n            " +
-        // "<span class='nx'>hasFrame</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.hasFrame+"',</span>\n            " +
-        // "<span class='nx'>hasColorBar</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.hasColorBar+"',</span>\n            " +
-        // "<span class='nx'>collapse</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.collapse+"',</span>\n            " +
-        // "<span class='nx'>apiBaseUrl</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.apiBaseUrl+"',</span>\n            " +
-        // "<span class='nx'>decimals</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.decimals+"',</span>\n            " +
-        // "<span class='nx'>numbersAbbreviate</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.numbersAbbreviate+"',</span>\n            " +
-        // "<span class='nx'>decimalsBillion</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.decimalsBillion+"',</span>\n            " +
-        // "<span class='nx'>decimalsMillion</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.decimalsMillion+"',</span>\n            " +
-        // "<span class='nx'>isPercentage</span><span class='o'>:</span>" +
-        // "<span class='s1'>'"+context.cardParameters?.isPercentage+"',</span>\n            " +
+        HTMLRowsForNotDefaultParameters() +
         "<span class='p'>})</span>\n    " +
         "<span class='p'>}</span>\n" +
         "<span class='p'>&lt;/</span>" +
@@ -230,4 +192,4 @@ function clearCard(){
 }
 
 initializeComponents();
-export {initializeComponents,updateValuesCard,filterAllFalsyValues,generateCardHTML,validateSeries,updateErrorContainer,reRenderCardComponent,clearCard,filterDefaultValues}
+export {initializeComponents,updateValuesCard,filterAllFalsyValues,generateCardHTML,validateSeries,updateErrorContainer,reRenderCardComponent,clearCard,HTMLRowsForNotDefaultParameters}
