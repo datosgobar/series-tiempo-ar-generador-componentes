@@ -28,6 +28,7 @@ let defaultCardParameters:CardParameters= {
         title: "",
         units: ""
 };
+let outputCardParameters:CardParameters ;
 let counter:number = 1;
 
   function reRenderCardComponent  () {
@@ -91,34 +92,33 @@ function updateValuesCard () {
 
 
 }
+function filterDefaultValues(){
+    outputCardParameters = Object.assign({},context.cardParameters); //arranco con los values actuales
+    const mapDefault = new Map (Object.entries(defaultCardParameters));
+    let mapOutput = new Map (Object.entries(outputCardParameters));
+    let htmlOutputForNotDefaultProps:string=""
+    mapOutput.forEach((value,key,map)=>{
+        if(mapDefault.get(key)  == value){
+            map.delete(key);
+        }
+    })
+    console.log(mapOutput);
+    mapOutput.forEach((value,key)=>{
+         let separator = (value!=true&&value!=false)?"'":" ";
+        htmlOutputForNotDefaultProps+= "<span class='nx'>"+key+"</span><span class='o'>:</span>" +
+        "<span class='s1'>"+separator+value+separator+",</span>\n            " ;
+    })
+    return htmlOutputForNotDefaultProps;
+  }
  function filterAllFalsyValues(obj:any){
 
    return  Object.entries(obj).reduce(
        (a:any,[k,v]) => (!(v!==false&&(v==undefined||v=="")) ? (a[k]=v, a) : a)
        , {});
 }
-// windowObject.addEventListener("load", function() {
-//   console.log("entre en eventlistener load")
-//   TSComponents.Card.render('card_example',
-//   {
-//   //     serieId: '148.3_INIVELNAL_DICI_M_26:percent_change',
-//   //     color: '#F9A822',
-//   //     hasChart: 'small',
-//   //     title: "Indice de Precios al Consumidor Nacional",
-//   //     links: "none"
-//   // }
-//   );
-//   initializeComponents();
-//   TSComponents.Graphic.render('graph_example', {
-//       // Llamada a la API de Series de Tiempo
-//       graphicUrl: 'https://apis.datos.gob.ar/series/api/series/?ids=tmi_arg',
-//       title: 'Tasa de Mortalidad Infantil de Argentina',
-//       source: 'Dirección de Estadística e Información en Salud (DEIS). Secretaría de Gobierno de Salud'
-//   })
-// })
 
 function generateCardHTML() {
-
+    filterDefaultValues();
     let html:string ="<pre>\n" +
         "<span class='c'>&lt;!-- código HTML donde ubicar un div con una tarjeta --&gt;</span>\n" +
         "<span class='p'>&lt;</span>" +
@@ -130,15 +130,15 @@ function generateCardHTML() {
         "<span class='nt'>div</span>" +
         "<span class='p'>&gt;</span>\n\n" +
         "<span class='c'>&lt;!-- JS que genera la tarjeta en el div --&gt;</span>\n" +
-        "<span class='p'>&lt;</span>\n    " +
-        "<span class='nt'>script</span>\n    " +
+        "<span class='p'>&lt;</span>" +
+        "<span class='nt'>script</span>" +
         "<span class='p'>&gt;</span>\n    " +
-        "<span class='nb'>window</span>\n    " +
-        "<span class='p'>.</span>\n    " +
-        "<span class='nx'>onload</span>\n    " +
-        "<span class='o'>=</span>\n    " +
-        "<span class='kd'>function</span>\n    " +
-        "<span class='p'>()</span>\n    " +
+        "<span class='nb'>window</span>" +
+        "<span class='p'>.</span>" +
+        "<span class='nx'>onload</span> " +
+        "<span class='o'>=</span> " +
+        "<span class='kd'>function</span>" +
+        "<span class='p'>()</span> " +
         "<span class='p'>{</span>\n        " +
         "<span class='nx'>TSComponents</span><span class='p'>.</span>" +
         "<span class='nx'>Card</span>" +
@@ -146,23 +146,53 @@ function generateCardHTML() {
         "<span class='nx'>render</span>" +
         "<span class='p'>(</span>" +
         "<span class='s1'>'tmi'</span>" +
-        "<span class='p'>,</span>" +
+        "<span class='p'>,</span> "+
         "<span class='p'>{</span>\n            " +
-        "<span class='c1'>// ID de la serie solicitada</span>\n            " +
-        "<span class='nx'>serieId</span><span class='o'>:</span>" +
-        "<span class='s1'>'"+context.cardParameters?.serieId+"'</span>\n        " +
+        filterDefaultValues() +
+        // "<span class='c1'>// ID de la serie solicitada</span>\n            " +
+        // "<span class='nx'>serieId</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.serieId+"',</span>\n            " +
+        // "<span class='nx'>locale</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.locale+"',</span>\n            " +
+        // "<span class='nx'>links</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.links+"',</span>\n            " +
+        // "<span class='nx'>color</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.color+"',</span>\n            " +
+        // "<span class='nx'>hasChart</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.hasChart+"',</span>\n            " +
+        // "<span class='nx'>explicitSign</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.explicitSign+"',</span>\n            " +
+        // "<span class='nx'>title</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.title+"',</span>\n            " +
+        // "<span class='nx'>source</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.source+"',</span>\n            " +
+        // "<span class='nx'>units</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.units+"',</span>\n            " +
+        // "<span class='nx'>hasFrame</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.hasFrame+"',</span>\n            " +
+        // "<span class='nx'>hasColorBar</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.hasColorBar+"',</span>\n            " +
+        // "<span class='nx'>collapse</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.collapse+"',</span>\n            " +
+        // "<span class='nx'>apiBaseUrl</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.apiBaseUrl+"',</span>\n            " +
+        // "<span class='nx'>decimals</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.decimals+"',</span>\n            " +
+        // "<span class='nx'>numbersAbbreviate</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.numbersAbbreviate+"',</span>\n            " +
+        // "<span class='nx'>decimalsBillion</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.decimalsBillion+"',</span>\n            " +
+        // "<span class='nx'>decimalsMillion</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.decimalsMillion+"',</span>\n            " +
+        // "<span class='nx'>isPercentage</span><span class='o'>:</span>" +
+        // "<span class='s1'>'"+context.cardParameters?.isPercentage+"',</span>\n            " +
         "<span class='p'>})</span>\n    " +
         "<span class='p'>}</span>\n" +
-        "<span class='p'>&lt;/</span>\n    " +
-        "<span class='nt'>script</span>\n    " +
+        "<span class='p'>&lt;/</span>" +
+        "<span class='nt'>script</span>" +
         "<span class='p'>&gt;</span>\n" +
         "</pre>"
-    // const text = "\nwindow.onload = function() {\n" +
-    //     "  TSComponents.Card.render('tmi', {\n" +
-    //     "  // ID de la serie solicitada\n" +
-    //     "  serieId: '"+context.cardParameters?.serieId+"'\n" +
-    //     "     })\n" +
-    //     "}";
+
     let codeTag = document.getElementById('codeTagCard');
     if(codeTag){
         codeTag.innerHTML = html;
@@ -200,4 +230,4 @@ function clearCard(){
 }
 
 initializeComponents();
-export {initializeComponents,updateValuesCard,filterAllFalsyValues,generateCardHTML,validateSeries,updateErrorContainer,reRenderCardComponent,clearCard}
+export {initializeComponents,updateValuesCard,filterAllFalsyValues,generateCardHTML,validateSeries,updateErrorContainer,reRenderCardComponent,clearCard,filterDefaultValues}
