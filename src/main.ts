@@ -1,6 +1,6 @@
 import "../node_modules/ar-poncho/dist/css/poncho.min.css"
 import "../node_modules/ar-poncho/dist/icono-arg.css"
-import {CardParameters, ComponentesContext} from "./model/models";
+import {CardParameters, ComponentesContext, GraphicParameters} from "./model/models";
 import axios from 'axios';
 import {AxiosResponse} from 'axios';
 
@@ -28,22 +28,67 @@ let defaultCardParameters:CardParameters= {
         title: "",
         units: ""
 };
+let defaultGraphParameters:GraphicParameters = {
+    aggregationSelector: false,
+    backgroundColor: "#cdcdcd",
+    chartOptions: {}, //TODO: default como objetos vacios o agrego undefined a la interface y los pongo como undefined?
+    chartType: "line",
+    chartTypeSelector: false,
+    chartTypes: {},
+    colors: new Map<0|1|2|3|4|5|6|7|8, string>().set(0,"#0072BB").set(1,"#2E7D33").set(2,"#C62828").set(3,"#F9A822").set(4,"#6A1B99").set(5,"#EC407A").set(6,"#C2185B").set(7,"#039BE5").set(8,"#6EA100"),
+    datePickerEnabled: false,
+    decimalLeftAxis: undefined,
+    decimalRightAxis: undefined,
+    decimalTooltip: undefined,
+    decimalTooltips: undefined,
+    decimalsBillion: 2,
+    decimalsMillion: 2,
+    displayUnits: false,
+    endDate: "inicializarEnFetchDeSerie como la mas antigua",
+    exportable: false,
+    frequencySelector: false,
+    graphicUrl: "",
+    legendField: "",
+    legendLabel: undefined,
+    locale: "AR",
+    navigator: false,
+    numbersAbbreviate: true,
+    seriesAxis: undefined,
+    source: "",
+    startDate: "inicializar en fetch de serie como la mas reciente",
+    title: "",
+    unitsSelector: false,
+    zoom: false
+
+}
 let outputCardParameters:CardParameters ;
-let counter:number = 1;
+let counterCard:number = 1;
+let counterGraph:number = 1;
 
   function reRenderCardComponent  () {
     console.log("entre en reload components: estos son los cardParameters agraficar")
     console.log(context.cardParameters)
 
-      let card :HTMLElement | null = document.getElementById('card_example_'+counter.toString());
-      counter=counter+1;
+      let card :HTMLElement | null = document.getElementById('card_example_'+counterCard.toString());
+      counterCard=counterCard+1;
 
       if(card)
-        card.outerHTML="<div id=\"card_example_"+counter.toString()+"\"></div>"
-     TSComponents.Card.render('card_example_'+counter.toString(), context.cardParameters);
+        card.outerHTML="<div id=\"card_example_"+counterCard.toString()+"\"></div>"
+     TSComponents.Card.render('card_example_'+counterCard.toString(), context.cardParameters);
 
 }
+function reRenderGraphComponent  () {
+    console.log("entre en reload components: estos son los graphParam agraficar")
+    console.log(context.graphicParameters)
 
+    let card :HTMLElement | null = document.getElementById('graph_example_'+counterCard.toString());
+    counterGraph=counterGraph+1;
+
+    if(card)
+        card.outerHTML="<div id=\"graph_example_"+counterGraph.toString()+"\"></div>"
+    TSComponents.Graphic.render('graph_example_'+counterGraph.toString(), context.graphicParameters);
+
+}
 function clearErrorMap() {
     context.errorMap= [];
     // updateErrorContainer('');
@@ -166,7 +211,7 @@ function initializeComponents() {
     if(!context) {
         context = {
             cardParameters:defaultCardParameters,
-            graphicParameters: undefined,
+            graphicParameters: defaultGraphParameters,
             errorMap: new Array<{error:string }>()
 
         }
@@ -188,6 +233,12 @@ function updateErrorContainer(errorString:string){
 }
 function clearCard(){
     let errorDiv = document.getElementById('card_example');
+    if(errorDiv){
+        errorDiv.innerHTML = "" ;
+    }
+}
+function clearGraph(){
+    let errorDiv = document.getElementById('graph_example');
     if(errorDiv){
         errorDiv.innerHTML = "" ;
     }
