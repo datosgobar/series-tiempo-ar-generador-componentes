@@ -22,7 +22,7 @@ let defaultCardParameters:CardParameters= {
         isPercentage: false,
         links: "full",
         locale: "AR",
-        numbersAbbreviate: false,//  en realidad el default es true para este campo, pero si aca pongo true no habria manera de desactivarlo, ya que solo se genera un par (key,value)
+        numbersAbbreviate: true,//  en realidad el default es true para este campo, pero si aca pongo true no habria manera de desactivarlo, ya que solo se genera un par (key,value)
         serieId: "",                // en el form cuando el checkbox esta en checked. Entonces lo dejo checked por default en html y aca en false, cosa que si lo uncheckean
         source: "",                 // no aparece en los (key,value) y por lo tanto queda este valor
         title: "",
@@ -57,10 +57,12 @@ function updateValuesCard () {
         (value, key) =>
         {
             object[key] = value;
-            let elementById = document.getElementsByName(key)?.item(0);
-            let checkboxes = elementById as HTMLInputElement;
-            if(checkboxes?.checked){
-                object[key] = (checkboxes.checked);
+            // let elementById = document.getElementsByName(key)?.item(0);
+            // let checkboxes = elementById as HTMLInputElement;
+            if(value.toString().includes("Disabled")){
+                object[key] = false;
+            }else if (value.toString().includes("Enabled")){
+                object[key] = true;
             }
         });
     let objectComponent : CardParameters =

@@ -20,7 +20,10 @@
 </head>
 <body>
 
-        <nav class="navbar  navbar-default navbar-fixed-top pos-f-t" role="navigation">
+
+
+    <div class="row ">
+        <nav class="navbar  navbar-default navbar-fixed-top pos-f-t  " role="navigation">
             <div class="container">
                 <div class="navbar-header">
                     <div class="navbar-collapse collapse">
@@ -31,8 +34,6 @@
                 </div>
             </div>
         </nav>
-
-    <div class="row ">
         <div class="col-sm-1 m-t-4 pos-f-t " role="navigation"  >
             <ul class="btn-title">
            Formularios
@@ -97,10 +98,22 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group item-form">
-                            <div class="form-check form-switch ">
-                                <input class="form-check-input" type="checkbox" role="switch" name="explicitSign" />
-                                <label class="form-check-label" for="explicitSign">Signo explícito</label>
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="explicitSignEnabled">Signo explícito</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="explicitSignEnabled">
+                                        <input type="radio" name="explicitSign" id="explicitSignEnabled" value="explicitSignEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="explicitSignDisabled">
+                                        <input type="radio" name="explicitSign" id="explicitSignDisabled" value="explicitSignDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
                             </div>
                         </div>
                     </div>
@@ -125,16 +138,44 @@
                         </div>
                     </div>
 
-                    <div class="row form-group item-form">
-                        <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" role="switch" name="hasFrame" />
-                            <label class="form-check-label" for="hasFrame">Marco alrededor de card</label>
+                    <div class="row ">
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="hasFrameEnabled">Marco alrededor de card</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="hasFrameEnabled">
+                                        <input type="radio" name="hasFrame" id="hasFrameEnabled" value="hasFrameEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="hasFrameDisabled">
+                                        <input type="radio" name="hasFrame" id="hasFrameDisabled" value="hasFrameDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="row form-group item-form">
-                        <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" role="switch" name="hasColorBar" />
-                            <label class="form-check-label" for="colorBar">Barra de color</label>
+                    <div class="row ">
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="hasColorBarEnabled">Barra de color</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="hasColorBarEnabled">
+                                        <input type="radio" name="hasColorBar" id="hasColorBarEnabled" value="hasColorBarEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="hasColorBarDisabled">
+                                        <input type="radio" name="hasColorBar" id="hasColorBarDisabled" value="hasColorBarDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
                         </div>
                     </div>
 
@@ -162,10 +203,24 @@
                             <input type="number" class="form-control" name="decimals" value="2">
                         </div>
                     </div>
-                    <div class="row form-group item-form">
-                        <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" role="switch" name="numbersAbbreviate" checked />
-                            <label class="form-check-label" for="numbersAbbreviate">Abreviar números </label>
+                    <div class="row ">
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="numbersAbbreviateEnabled">Abreviar números</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="numbersAbbreviateEnabled">
+                                        <input type="radio" name="numbersAbbreviate" id="numbersAbbreviateEnabled" value="numbersAbbreviateEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="numbersAbbreviateDisabled">
+                                        <input type="radio" name="numbersAbbreviate" id="numbersAbbreviateDisabled" value="numbersAbbreviateDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -181,10 +236,25 @@
                         </div>
                     </div>
 
-                    <div class="row form-group item-form">
-                        <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" role="switch" name="isPercentage"  />
-                            <label class="form-check-label" for="isPercentage">Valor porcentual </label>
+                    <div class="row ">
+
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="isPercentageEnabled">Valor porcentual</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="isPercentageEnabled">
+                                        <input type="radio" name="isPercentage" id="isPercentageEnabled" value="isPercentageEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="isPercentageDisabled">
+                                        <input type="radio" name="isPercentage" id="isPercentageDisabled" value="isPercentageDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
                         </div>
                     </div>
 
