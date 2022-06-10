@@ -3,6 +3,7 @@ import "../node_modules/ar-poncho/dist/icono-arg.css"
 import {CardParameters, ComponentesContext, GraphicParameters} from "./model/models";
 import axios from 'axios';
 import {AxiosResponse} from 'axios';
+import queryString, { ParsedQuery } from 'query-string';
 
 const windowObject = window as any;
 const TSComponents = windowObject.TSComponents;
@@ -91,7 +92,7 @@ function reRenderGraphComponent  () {
 
 }
 function clearErrorMap() {
-    context.errorMap= [];
+    context.cardErrorMap= [];
     // updateErrorContainer('');
 }
 
@@ -123,17 +124,17 @@ function updateValuesCard () {
             ()=>{
                 clearCard();
                 reRenderCardComponent();
-                updateErrorContainer("");
+                updateCardErrorContainer("");
                 clearErrorMap();
             }
         )
         .catch(
             (error)=>{
-                context.errorMap = error.response.data.errors;
+                context.cardErrorMap = error.response.data.errors;
                 // console.log(context.errorMap.values('\n'));
                 let oneStringErrors:string='' ;
-                context.errorMap.forEach((value)=>{oneStringErrors+='\n'+value.error});
-                updateErrorContainer(oneStringErrors);
+                context.cardErrorMap.forEach((value)=>{oneStringErrors+='\n'+value.error});
+                updateCardErrorContainer(oneStringErrors);
                 clearCard();
             }
             );
@@ -147,13 +148,17 @@ function updateValuesGraph () {
     formData.forEach(
         (value, key) =>
         {
-            object[key] = value;
             // let elementById = document.getElementsByName(key)?.item(0);
             // let checkboxes = elementById as HTMLInputElement;
             if(value.toString().includes("Disabled")){
                 object[key] = false;
-            }else if (value.toString().includes("Enabled")){
+            }else if (value.toString().includes("Enabled")) {
                 object[key] = true;
+            }
+            if(key.toString().includes('colorPalette')){
+
+            }else{
+                object[key] = value;
             }
         });
     let objectComponent : GraphicParameters =
@@ -162,22 +167,29 @@ function updateValuesGraph () {
         };
 
     context.graphicParameters = filterAllFalsyValues(objectComponent);
-    validateSeries(context.graphicParameters?.graphicUrl as string,'')
+    let seriesIdFromGraphUrl =queryString.parseUrl(context.graphicParameters?.graphicUrl as string)
+    let seriesId :ParsedQuery= seriesIdFromGraphUrl?.query ;
+    let query = seriesId as {ids:string};
+    validateSeries(query.ids,'')
         .then(
             ()=>{
                 clearGraph();
                 reRenderGraphComponent();
-                updateErrorContainer("");
+                updateGraphErrorContainer("");
                 clearErrorMap();
             }
         )
         .catch(
             (error)=>{
-                context.errorMap = error.response.data.errors;
+                if(error.response) {
+                    context.graphErrorMap = error.response.data.errors;
+                }else{
+                    context.graphErrorMap.push(error.message)
+                }
                 // console.log(context.errorMap.values('\n'));
                 let oneStringErrors:string='' ;
-                context.errorMap.forEach((value)=>{oneStringErrors+='\n'+value.error});
-                updateErrorContainer(oneStringErrors);
+                context.graphErrorMap.forEach((value)=>{oneStringErrors+='\n'+value});
+                updateGraphErrorContainer(oneStringErrors);
                 clearGraph();
             }
         );
@@ -313,7 +325,8 @@ function initializeComponents() {
         context = {
             cardParameters:defaultCardParameters,
             graphicParameters: defaultGraphParameters,
-            errorMap: new Array<{error:string }>()
+            cardErrorMap: new Array<{error:string }>(),
+            graphErrorMap: new Array<string>()
 
         }
     }
@@ -327,10 +340,27 @@ function initializeComponents() {
     generateGraphHTMLButton?.addEventListener('click',generateGraphHTML)
 }
 function validateSeries(seriesId:string,collapse:string): Promise<AxiosResponse<any, any>>{
-     return axios.get(API_SERIES_URL,{params:{ids:seriesId , collapse:collapse,collapse_aggregation:'sum'}});
+    let GraphParams=
+                {
+                    ids:seriesId ,
+                };
+    let CardParams = {
+        ...GraphParams,
+        collapse:collapse,
+        collapse_aggregation: 'sum'
+    }
+    let  FinalParams = (collapse)?CardParams:GraphParams;
+    let paramsObject= { params: FinalParams}
+    console.log(paramsObject)
+    return axios.get(API_SERIES_URL,paramsObject);
 }
-function updateErrorContainer(errorString:string){
-    let errorDiv = document.getElementById('error-container');
+function updateCardErrorContainer(errorString:string){
+    let errorDiv = document.getElementById('card-error-container');
+    if(errorDiv){
+        errorDiv.textContent = errorString ;
+    }
+}function updateGraphErrorContainer(errorString:string){
+    let errorDiv = document.getElementById('graph-error-container');
     if(errorDiv){
         errorDiv.textContent = errorString ;
     }
@@ -349,4 +379,4 @@ function clearGraph(){
 }
 
 initializeComponents();
-export {initializeComponents,updateValuesCard,filterAllFalsyValues,generateCardHTML,validateSeries,updateErrorContainer,reRenderCardComponent,clearCard}
+export {initializeComponents,updateValuesCard,filterAllFalsyValues,generateCardHTML,validateSeries,updateCardErrorContainer,reRenderCardComponent,clearCard}

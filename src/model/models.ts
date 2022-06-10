@@ -74,6 +74,7 @@ interface CardParameters {
 interface ComponentesContext {
     graphicParameters:GraphicParameters|undefined;
     cardParameters:CardParameters|undefined;
-    errorMap: Array<{error:string }>;
+    cardErrorMap: Array<{error:string }>;
+    graphErrorMap: Array<string>;
 }
 export type {ComponentesContext,GraphicParameters,CardParameters};
