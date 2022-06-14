@@ -120,7 +120,9 @@ function updateValuesCard () {
         };
 
     context.cardParameters = filterAllFalsyValues(objectComponent);
-    validateSeries(context.cardParameters?.serieId as string,context.cardParameters?.collapse as string)
+    let seriesArray = new Array<string>();
+    seriesArray.push(context.cardParameters?.serieId as string);
+    validateSeries(seriesArray,context.cardParameters?.collapse as string)
         .then(
             ()=>{
                 clearCard();
