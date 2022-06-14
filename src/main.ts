@@ -12,7 +12,7 @@ let context:ComponentesContext;
 let defaultCardParameters:CardParameters= {
     apiBaseUrl: "http://apis.datos.gob.ar/series/api",
         collapse: "",
-        color: "#0072BB",
+        color: "#0072bb",
         decimals: 2,
         decimalsBillion: 2,
         decimalsMillion: 2,
@@ -27,8 +27,9 @@ let defaultCardParameters:CardParameters= {
         serieId: "",                // en el form cuando el checkbox esta en checked. Entonces lo dejo checked por default en html y aca en false, cosa que si lo uncheckean
         source: "",                 // no aparece en los (key,value) y por lo tanto queda este valor
         title: "",
-        units: ""
+        units: "",
 };
+let defaultColorsMap = new Map<0|1|2|3|4|5|6|7|8, string>().set(0,"#0072bb").set(1,"#2e7d33").set(2,"#c62828").set(3,"#f9a822").set(4,"#6a1b99").set(5,"#ec407a").set(6,"#c2185b").set(7,"#039be5").set(8,"#6ea100");
 let defaultGraphParameters:GraphicParameters = {
     aggregationSelector: false,
     backgroundColor: "#cdcdcd",
@@ -36,7 +37,7 @@ let defaultGraphParameters:GraphicParameters = {
     chartType: "line",
     chartTypeSelector: false,
     chartTypes: {},
-    colors: new Map<0|1|2|3|4|5|6|7|8, string>().set(0,"#0072BB").set(1,"#2E7D33").set(2,"#C62828").set(3,"#F9A822").set(4,"#6A1B99").set(5,"#EC407A").set(6,"#C2185B").set(7,"#039BE5").set(8,"#6EA100"),
+    colors: Array.from(defaultColorsMap).flatMap(x=>x),
     datePickerEnabled: false,
     decimalLeftAxis: undefined,
     decimalRightAxis: undefined,
@@ -144,6 +145,7 @@ function updateValuesCard () {
 function updateValuesGraph () {
     const form:HTMLFormElement = document.getElementById("form-graph") as HTMLFormElement;
     const formData:FormData = new FormData(form);
+    let updatedColorsMap:Map<0|1|2|3|4|5|6|7|8, string>= new Map(defaultColorsMap);
     var object :any = {};
     formData.forEach(
         (value, key) =>
@@ -156,11 +158,18 @@ function updateValuesGraph () {
                 object[key] = true;
             }
             if(key.toString().includes('colorPalette')){
+                let index = parseInt(key.substring(key.length-1,key.length)) as 0|1|2|3|4|5|6|7|8;
+                updatedColorsMap.set(index,value.toString());
+            }else if(key.toString().includes("chartOptions")){
 
-            }else{
+            }else if(key.toString().includes("chartType")){
+
+            }
+            else{
                 object[key] = value;
             }
         });
+    object['colors'] = Array.from( updatedColorsMap).flatMap(x=>x);
     let objectComponent : GraphicParameters =
         {...defaultGraphParameters,
             ...object
@@ -170,10 +179,12 @@ function updateValuesGraph () {
     let seriesIdFromGraphUrl =queryString.parseUrl(context.graphicParameters?.graphicUrl as string)
     let seriesId :ParsedQuery= seriesIdFromGraphUrl?.query ;
     let query = seriesId as {ids:string};
-    validateSeries(query.ids,'')
+    let ids:Array<string> = Array.from(query.ids.split(','));
+    validateSeries(ids,'')
         .then(
             ()=>{
                 clearGraph();
+                generateChartTypeSelects(ids);
                 reRenderGraphComponent();
                 updateGraphErrorContainer("");
                 clearErrorMap();
@@ -214,9 +225,24 @@ function getHtmlForDiffFields(mapOutput: Map<any, any> , mapDefault: Map<any,any
     })
     console.log(mapOutput);
     mapOutput.forEach((value, key) => {
-        let separator = (value != true && value != false) ? "'" : " ";
+        let separatorBegin = (value != true && value != false) ? "'" : " ";
+        let separatorEnd = separatorBegin;
+
+        if(key.toString().includes('colors')) {
+            let formattedArray:Array<string|number> = value as Array<string|number>;
+            let realformat = formattedArray.map((x,index)=>{
+                if(index%2){
+                   return "\""+x+"\"";
+                }else{
+                    return x;
+                }
+            })
+            separatorBegin = '[';
+            separatorEnd = ']';
+             value = realformat;
+        }
         htmlOutputForNotDefaultProps += "<span class='nx'>" + key + "</span><span class='o'>:</span>" +
-            "<span class='s1'>" + separator + value + separator + ",</span>\n            ";
+            "<span class='s1'>" + separatorBegin + value.toString() + separatorEnd + ",</span>\n            ";
     })
     return htmlOutputForNotDefaultProps;
 }
@@ -339,10 +365,10 @@ function initializeComponents() {
     const generateGraphHTMLButton:HTMLButtonElement = document.getElementById("generateGraphHTML") as HTMLButtonElement;
     generateGraphHTMLButton?.addEventListener('click',generateGraphHTML)
 }
-function validateSeries(seriesId:string,collapse:string): Promise<AxiosResponse<any, any>>{
+function validateSeries(seriesId:Array<string>,collapse:string): Promise<AxiosResponse<any, any>>{
     let GraphParams=
                 {
-                    ids:seriesId ,
+                    ids:seriesId.join(',') ,
                 };
     let CardParams = {
         ...GraphParams,
@@ -377,6 +403,22 @@ function clearGraph(){
         errorDiv.innerHTML = "" ;
     }
 }
+function generateChartTypeSelects(ids: Array<string>) {
+    let container = document.getElementById('chartTypeBySeries');
 
+    let baseHTMLSelect = (id:string)=> "<label for='chartTypeBySeries'>Tipo de gráfico para la serie: "+id+" </label><br>" +
+          "<select name=\"chartTypes"+id+"\" class=\"format form-control\">" +
+          "<option value=\"line\">Línea</option>" +
+          "<option value=\"area\">Área</option>" +
+          "<option value=\"column\">Columna</option>" +
+          "</select>";
+    let finalHTMLSelect ="";
+    ids.forEach((id:string)=>{
+        finalHTMLSelect+= baseHTMLSelect(id);
+    })
+    if(container){
+        container.innerHTML=finalHTMLSelect;
+    }
+}
 initializeComponents();
 export {initializeComponents,updateValuesCard,filterAllFalsyValues,generateCardHTML,validateSeries,updateCardErrorContainer,reRenderCardComponent,clearCard}

@@ -25,7 +25,7 @@ interface GraphicParameters {
     locale:"AR"|"US";
     zoom:boolean;
     exportable:boolean;
-    colors:Map<0|1|2|3|4|5|6|7|8,string>;
+    colors:Array<0|1|2|3|4|5|6|7|8|string>;
     backgroundColor:string;
     datePickerEnabled:boolean;
     legendField:string;
