@@ -1,5 +1,6 @@
+import * as highcharts from 'highcharts';
+interface HighChartOptions extends highcharts.Options{
 
-interface HighChartOptions {
 }
 type ChartType = "line"|"column"|"area";
 interface ChartTypes {

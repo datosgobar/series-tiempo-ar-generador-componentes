@@ -4,7 +4,7 @@ import {CardParameters, ComponentesContext, GraphicParameters} from "./model/mod
 import axios from 'axios';
 import {AxiosResponse} from 'axios';
 import queryString, { ParsedQuery } from 'query-string';
-
+import {defaultOptions as highChartDefaultOptions} from 'highcharts';
 const windowObject = window as any;
 const TSComponents = windowObject.TSComponents;
 const API_SERIES_URL:string = "https://apis.datos.gob.ar/series/api/series/";
@@ -33,7 +33,7 @@ let defaultColorsMap = new Map<0|1|2|3|4|5|6|7|8, string>().set(0,"#0072bb").set
 let defaultGraphParameters:GraphicParameters = {
     aggregationSelector: false,
     backgroundColor: "#cdcdcd",
-    chartOptions: {}, //TODO: default como objetos vacios o agrego undefined a la interface y los pongo como undefined?
+    chartOptions: highChartDefaultOptions, //TODO: default como objetos vacios o agrego undefined a la interface y los pongo como undefined?
     chartType: "line",
     chartTypeSelector: false,
     chartTypes: {},
@@ -163,7 +163,12 @@ function updateValuesGraph () {
                 let index = parseInt(key.substring(key.length-1,key.length)) as 0|1|2|3|4|5|6|7|8;
                 updatedColorsMap.set(index,value.toString());
             }else if(key.toString().includes("chartOptions")){
-
+                let jsonOptions= value as string;
+                if(jsonOptions.includes(JSON.stringify(highChartDefaultOptions))){
+                    // do nothing
+                }else{
+                    object[key] = JSON.parse(jsonOptions)
+                }
             }else if(key.toString().includes("chartType")){
 
             }
@@ -230,6 +235,11 @@ function getHtmlForDiffFields(mapOutput: Map<any, any> , mapDefault: Map<any,any
         let separatorBegin = (value != true && value != false) ? "'" : " ";
         let separatorEnd = separatorBegin;
 
+        if(key.toString().includes('chartOptions')){
+            value = JSON.stringify(value);
+            separatorEnd='';
+            separatorBegin='';
+        }
         if(key.toString().includes('colors')) {
             let formattedArray:Array<string|number> = value as Array<string|number>;
             let realformat = formattedArray.map((x,index)=>{
@@ -366,6 +376,8 @@ function initializeComponents() {
     previewButtonGraph?.addEventListener('click',updateValuesGraph);
     const generateGraphHTMLButton:HTMLButtonElement = document.getElementById("generateGraphHTML") as HTMLButtonElement;
     generateGraphHTMLButton?.addEventListener('click',generateGraphHTML)
+    const inputChartOptions:HTMLInputElement = document.getElementById("chartOptions") as HTMLInputElement;
+    inputChartOptions.value= getDefaultChartOptions();
 }
 function validateSeries(seriesId:Array<string>,collapse:string): Promise<AxiosResponse<any, any>>{
     let GraphParams=
@@ -422,5 +434,10 @@ function generateChartTypeSelects(ids: Array<string>) {
         container.innerHTML=finalHTMLSelect;
     }
 }
+function getDefaultChartOptions(): string {
+    return JSON.stringify(highChartDefaultOptions);
+}
+
 initializeComponents();
 export {initializeComponents,updateValuesCard,filterAllFalsyValues,generateCardHTML,validateSeries,updateCardErrorContainer,reRenderCardComponent,clearCard}
+
