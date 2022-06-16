@@ -3,6 +3,10 @@ interface HighChartOptions extends highcharts.Options{
 
 }
 type ChartType = "line"|"column"|"area";
+interface BySeriesObject {
+    [serie: string]: any;
+
+}
 interface ChartTypes {
     [serie: string]: ChartType;
 }
@@ -77,5 +81,6 @@ interface ComponentesContext {
     cardParameters:CardParameters|undefined;
     cardErrorMap: Array<{error:string }>;
     graphErrorMap: Array<string>;
+    seriesIdGraph: Array<string>;
 }
-export type {ComponentesContext,GraphicParameters,CardParameters};
+export type {ComponentesContext,BySeriesObject,GraphicParameters,CardParameters,ChartTypes,ChartType};

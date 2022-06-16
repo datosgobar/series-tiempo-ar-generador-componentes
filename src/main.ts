@@ -1,6 +1,13 @@
 import "../node_modules/ar-poncho/dist/css/poncho.min.css"
 import "../node_modules/ar-poncho/dist/icono-arg.css"
-import {CardParameters, ComponentesContext, GraphicParameters} from "./model/models";
+import {
+    BySeriesObject,
+    CardParameters,
+    ChartType,
+    ChartTypes,
+    ComponentesContext,
+    GraphicParameters
+} from "./model/models";
 import axios from 'axios';
 import {AxiosResponse} from 'axios';
 import queryString, { ParsedQuery } from 'query-string';
@@ -10,10 +17,12 @@ import {
     clearGraph,
     filterAllFalsyValues,
     generateCardHTML,
-    generateChartTypeSelects,
-    generateGraphHTML, updateCardErrorContainer,
+    generateChartTypeSelects, generateDecimalNumbersInTooltipBySeriesInput,
+    generateGraphHTML, generateLegendLabelInputs, generateSeriesAxisSelects, updateCardErrorContainer,
     updateGraphErrorContainer
 } from "./utils";
+let objectBySeries : BySeriesObject;
+
 const windowObject = window as any;
 const TSComponents = windowObject.TSComponents;
 const API_SERIES_URL:string = "https://apis.datos.gob.ar/series/api/series/";
@@ -51,7 +60,7 @@ let defaultGraphParameters:GraphicParameters = {
     decimalLeftAxis: undefined,
     decimalRightAxis: undefined,
     decimalTooltip: undefined,
-    decimalTooltips: undefined,
+    decimalTooltips: {},
     decimalsBillion: 2,
     decimalsMillion: 2,
     displayUnits: false,
@@ -130,6 +139,7 @@ function updateValuesCard () {
     context.cardParameters = filterAllFalsyValues(objectComponent);
     let seriesArray = new Array<string>();
     seriesArray.push(context.cardParameters?.serieId as string);
+
     validateSeries(seriesArray,context.cardParameters?.collapse as string)
         .then(
             ()=>{
@@ -157,6 +167,7 @@ function updateValuesGraph () {
     const formData:FormData = new FormData(form);
     let updatedColorsMap:Map<0|1|2|3|4|5|6|7|8, string>= new Map(defaultColorsMap);
     var object :any = {};
+    let chartTypes :ChartTypes;
     formData.forEach(
         (value, key) =>
         {
@@ -178,9 +189,11 @@ function updateValuesGraph () {
                     object[key] = JSON.parse(jsonOptions)
                 }
             }else if(key.toString().includes("chartType")){
+                if(key.toString().includes("chartTypes")){
+                    chartTypes[key.toString().split('chartTypes')[1]] = value as ChartType;
+                }
 
-            }
-            else{
+            } else if(!object[key]){
                 object[key] = value;
             }
         });
@@ -195,11 +208,16 @@ function updateValuesGraph () {
     let seriesId :ParsedQuery= seriesIdFromGraphUrl?.query ;
     let query = seriesId as {ids:string};
     let ids:Array<string> = Array.from(query.ids.split(','));
+    context.seriesIdGraph = Array.from(ids);
+    context.seriesIdGraph.forEach((element)=>objectBySeries[element]={});
     validateSeries(ids,'')
         .then(
             ()=>{
                 clearGraph();
+                generateLegendLabelInputs(ids)
                 generateChartTypeSelects(ids);
+                generateSeriesAxisSelects(ids);
+                generateDecimalNumbersInTooltipBySeriesInput(ids);
                 reRenderGraphComponent();
                 updateGraphErrorContainer("");
                 clearErrorMap();
@@ -231,7 +249,8 @@ function initializeComponents() {
             cardParameters:defaultCardParameters,
             graphicParameters: defaultGraphParameters,
             cardErrorMap: new Array<{error:string }>(),
-            graphErrorMap: new Array<string>()
+            graphErrorMap: new Array<string>(),
+            seriesIdGraph: new Array<string>(),
 
         }
     }
@@ -268,5 +287,5 @@ function getDefaultChartOptions(): string {
 }
 
 initializeComponents();
-export {initializeComponents,updateValuesCard,context,defaultGraphParameters,validateSeries,reRenderCardComponent}
+export {initializeComponents,updateValuesCard,context,defaultGraphParameters,defaultCardParameters,validateSeries,reRenderCardComponent}
 

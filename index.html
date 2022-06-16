@@ -487,15 +487,8 @@
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
                             <label for='chartTypeBySeries'>Tipo de gráfico por serie </label><br>
-                            <div  id="chartTypeBySeries">
+                            <div  id="chartTypeBySeries" class="col-md-offset-1">
                                 <label class="text-info"> Generar una vista previa para habilitar esta funcionalidad</label>
-<!--                            <label>Tipo de gráfico por serie </label><br>-->
-<!--&lt;!&ndash;                            TODO: generar de manera dinamica tantos selects como series haya&ndash;&gt;-->
-<!--                            <select name="chartTypes" class="format form-control">-->
-<!--                                <option value="line">Línea</option>-->
-<!--                                <option value="area">Área</option>-->
-<!--                                <option value="column">Columna</option>-->
-<!--                            </select>-->
                             </div>
                         </div>
                     </div>
@@ -527,21 +520,25 @@
                     </fieldset>
 
                     <div class="row">
-                        <div class="col-md-8 col-md-offset-2 form-group item-form">
-                            <label > Texto en leyenda para cada serie</label>
-                            <!--                            TODO: generar de manera dinamica tantos inputs como series haya-->
-                            <input type="text" class="form-control" name="legendLabel1" value="">
+                        <div class="col-md-8 col-md-offset-2 form-group item-form" >
+                            <label for="legendLabelBySeries"> Texto en leyenda para cada serie</label>
 
+                            <div id="legendLabelBySeries" class="col-md-offset-1">
+                                <label class="text-info"> Generar una vista previa para habilitar esta funcionalidad</label>
+
+                            <!--                            TODO: generar de manera dinamica tantos inputs como series haya-->
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
-                            <label>Ubicación del eje de las series</label><br>
-                            <!--                            TODO: generar de manera dinamica tantos selects como series haya-->
-                            <select name="seriesAxis" class="format form-control">
-                                <option value="right">Derecha</option>
-                                <option value="left">Izquierda</option>
-                            </select>
+                            <label for="seriesAxisBySeries">Ubicación del eje de las series</label><br>
+                            <div id="seriesAxisBySeries" class="col-md-offset-1">
+                                <label class="text-info"> Generar una vista previa para habilitar esta funcionalidad</label>
+
+                                <!--                            TODO: generar de manera dinamica tantos inputs como series haya-->
+                            </div>
+
                         </div>
                     </div>
                     <div class="row">
@@ -568,9 +565,13 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
-                            <label>Cantidad de decimales en tooltip para cada serie</label><br>
+                            <label for="decimalTooltipsBySeries">Cantidad de decimales en tooltip para cada serie</label><br>
                             <!--                            TODO: generar de manera dinamica tantos selects como series haya-->
-                            <input type="number" class="form-control" name="decimalTooltips1" >
+                            <div id="decimalTooltipsBySeries" class="col-md-offset-1">
+                                <label class="text-info"> Generar una vista previa para habilitar esta funcionalidad</label>
+
+                                <!--                            TODO: generar de manera dinamica tantos inputs como series haya-->
+                            </div>
                         </div>
                     </div>
                     <div class="row">

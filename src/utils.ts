@@ -1,5 +1,5 @@
-import {context, defaultGraphParameters} from "./main";
-import {CardParameters, GraphicParameters} from "./model/models";
+import {context, defaultCardParameters, defaultGraphParameters} from "./main";
+import {BySeriesObject, CardParameters, GraphicParameters} from "./model/models";
 
 let outputCardParameters:CardParameters ;
 let outputGraphParameters:GraphicParameters;
@@ -147,17 +147,51 @@ function getHtmlForDiffFields(mapOutput: Map<any, any> , mapDefault: Map<any,any
     return htmlOutputForNotDefaultProps;
 }
 function generateChartTypeSelects(ids: Array<string>) {
-    let container = document.getElementById('chartTypeBySeries');
-
-    let baseHTMLSelect = (id:string)=> "<label for='chartTypeBySeries'>Tipo de gráfico para la serie: "+id+" </label><br>" +
-        "<select name=\"chartTypes"+id+"\" class=\"format form-control\">" +
-        "<option value=\"line\">Línea</option>" +
-        "<option value=\"area\">Área</option>" +
-        "<option value=\"column\">Columna</option>" +
-        "</select>";
+    let options = new Map<string,string>();
+    options.set("line","Línea").set("area","Área").set("column","Columna");
+    generateSelectsInContainerLabeledById(ids,'chartTypeBySeries',options);
+}
+function generateSeriesAxisSelects(ids: Array<string>){
+    let options = new Map<string,string>();
+    options.set("right","Derecha").set("left","Izquierda");
+    generateSelectsInContainerLabeledById(ids,"seriesAxisBySeries",options);
+}
+function generateSelectsInContainerLabeledById(ids: Array<string>,container_id:string,options:Map<string,string>) {
+    let container = document.getElementById(container_id);
+    let getOptionHTML = (optionValue:string,optionLegend:string)=>
+    {
+       return "<option value=\""+optionValue+"\">"+optionLegend+"</option>"
+    };
+    let optionHtml = "";
+    options.forEach((key,value)=> optionHtml+=getOptionHTML(value,key));
+    let baseHTMLSelect = (idSerie:string)=> "<label for='chartTypeBySeries'>Tipo de gráfico para la serie: "+idSerie+" </label><br>" +
+        "<select name=\"chartTypes"+idSerie+"\" class=\"format form-control\">" +
+        optionHtml
+        +"</select>";
     let finalHTMLSelect ="";
     ids.forEach((id:string)=>{
         finalHTMLSelect+= baseHTMLSelect(id);
+    })
+    if(container){
+        container.innerHTML=finalHTMLSelect;
+    }
+}
+function generateDecimalNumbersInTooltipBySeriesInput(ids:Array<string>){
+    generateInputsInContainerBySeriesId(ids,'decimalTooltipsBySeries',"number",
+        "Cantidad de decimales en tooltip para la serie:")
+}
+function generateLegendLabelInputs(ids: Array<string>) {
+    generateInputsInContainerBySeriesId(ids,'legendLabelBySeries',"text",
+        "Texto en leyenda para la serie:")
+}
+function generateInputsInContainerBySeriesId(seriesIds: Array<string>,containerId:string,inputType:"number"|"text",legend:string) {
+    let container = document.getElementById(containerId);
+
+    let baseHTMLInput = (id:string)=> "<label for='"+containerId+"'>"+legend+" "+id+" </label><br>" +
+        "<input type=\""+inputType+"\" class=\"form-control\" name=\""+containerId+id+"\" >";
+    let finalHTMLSelect ="";
+    seriesIds.forEach((id:string)=>{
+        finalHTMLSelect+= baseHTMLInput(id);
     })
     if(container){
         container.innerHTML=finalHTMLSelect;
@@ -187,4 +221,7 @@ function clearGraph(){
         errorDiv.innerHTML = "" ;
     }
 }
-export  {HTMLRowsForNotDefaultGraphParameters,generateCardHTML,filterAllFalsyValues,generateGraphHTML,HTMLRowsForNotDefaultCardParameters,getHtmlForDiffFields,generateChartTypeSelects,clearGraph,clearCard,updateGraphErrorContainer,updateCardErrorContainer};
+export  {HTMLRowsForNotDefaultGraphParameters,generateCardHTML,filterAllFalsyValues,generateGraphHTML,
+    HTMLRowsForNotDefaultCardParameters,getHtmlForDiffFields,generateChartTypeSelects,clearGraph,clearCard,
+    updateGraphErrorContainer,updateCardErrorContainer,generateLegendLabelInputs,generateSeriesAxisSelects,
+    generateDecimalNumbersInTooltipBySeriesInput};
