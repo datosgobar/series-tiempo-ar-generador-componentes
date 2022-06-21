@@ -82,15 +82,15 @@ let defaultGraphParameters:GraphicParameters = {
 
 }
 
-let counterCard:number = 0;
-let counterGraph:number = 0;
+let counterCard:number = 1;
+let counterGraph:number = 1;
 
   function reRenderCardComponent  () {
     console.log("entre en reload components: estos son los cardParameters agraficar")
     console.log(context.cardParameters)
-      counterCard=counterCard+1;
 
       let card :HTMLElement | null = document.getElementById('card_example_'+counterCard.toString());
+      counterCard=counterCard+1;
 
       if(card)
         card.outerHTML="<div id=\"card_example_"+counterCard.toString()+"\"></div>"
@@ -100,9 +100,9 @@ let counterGraph:number = 0;
 function reRenderGraphComponent  () {
     console.log("entre en reload components: estos son los graphParam agraficar")
     console.log(context.graphicParameters)
-    counterGraph=counterGraph+1;
 
-    let card :HTMLElement | null = document.getElementById('graph_example_'+counterCard.toString());
+    let card :HTMLElement | null = document.getElementById('graph_example_'+counterGraph.toString());
+    counterGraph=counterGraph+1;
 
     if(card)
         card.outerHTML="<div id=\"graph_example_"+counterGraph.toString()+"\"></div>"
