@@ -1,5 +1,5 @@
 import {context, defaultCardParameters, defaultGraphParameters} from "./main";
-import {BySeriesObject, CardParameters, GraphicParameters} from "./model/models";
+import { CardParameters, GraphicParameters} from "./model/models";
 
 let outputCardParameters:CardParameters ;
 let outputGraphParameters:GraphicParameters;

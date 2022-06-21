@@ -21,7 +21,7 @@ import {
     generateGraphHTML, generateLegendLabelInputs, generateSeriesAxisSelects, updateCardErrorContainer,
     updateGraphErrorContainer
 } from "./utils";
-let objectBySeries : BySeriesObject;
+let objectBySeries : BySeriesObject = {};
 
 const windowObject = window as any;
 const TSComponents = windowObject.TSComponents;
@@ -82,15 +82,15 @@ let defaultGraphParameters:GraphicParameters = {
 
 }
 
-let counterCard:number = 1;
-let counterGraph:number = 1;
+let counterCard:number = 0;
+let counterGraph:number = 0;
 
   function reRenderCardComponent  () {
     console.log("entre en reload components: estos son los cardParameters agraficar")
     console.log(context.cardParameters)
+      counterCard=counterCard+1;
 
       let card :HTMLElement | null = document.getElementById('card_example_'+counterCard.toString());
-      counterCard=counterCard+1;
 
       if(card)
         card.outerHTML="<div id=\"card_example_"+counterCard.toString()+"\"></div>"
@@ -100,9 +100,9 @@ let counterGraph:number = 1;
 function reRenderGraphComponent  () {
     console.log("entre en reload components: estos son los graphParam agraficar")
     console.log(context.graphicParameters)
+    counterGraph=counterGraph+1;
 
     let card :HTMLElement | null = document.getElementById('graph_example_'+counterCard.toString());
-    counterGraph=counterGraph+1;
 
     if(card)
         card.outerHTML="<div id=\"graph_example_"+counterGraph.toString()+"\"></div>"
@@ -167,7 +167,7 @@ function updateValuesGraph () {
     const formData:FormData = new FormData(form);
     let updatedColorsMap:Map<0|1|2|3|4|5|6|7|8, string>= new Map(defaultColorsMap);
     var object :any = {};
-    let chartTypes :ChartTypes;
+    let chartTypes :ChartTypes = {};
     formData.forEach(
         (value, key) =>
         {
@@ -193,7 +193,15 @@ function updateValuesGraph () {
                     chartTypes[key.toString().split('chartTypes')[1]] = value as ChartType;
                 }
 
-            } else if(!object[key]){
+            } else if(key.toString().includes("BySeries")&& value){
+                let [realKey,series] = key.split('BySeries');
+                if (!object[realKey]) {
+                    object[realKey] = {...objectBySeries}
+                }
+                let bySeries = object[realKey] as BySeriesObject;
+                bySeries[series] = realKey.includes('decimal')?parseInt(value.toString()):value;
+            }
+            else if(!object[key]){
                 object[key] = value;
             }
         });
@@ -253,17 +261,18 @@ function initializeComponents() {
             seriesIdGraph: new Array<string>(),
 
         }
+        const previewButtonCard:HTMLButtonElement = document.getElementById("previewButtonCard") as HTMLButtonElement;
+        previewButtonCard?.addEventListener('click',updateValuesCard);
+        const generateCardHtmlButton:HTMLButtonElement = document.getElementById("generateCardHTML") as HTMLButtonElement;
+        generateCardHtmlButton?.addEventListener('click',generateCardHTML)
+        const previewButtonGraph:HTMLButtonElement = document.getElementById("previewButtonGraph") as HTMLButtonElement;
+        previewButtonGraph?.addEventListener('click',updateValuesGraph);
+        const generateGraphHTMLButton:HTMLButtonElement = document.getElementById("generateGraphHTML") as HTMLButtonElement;
+        generateGraphHTMLButton?.addEventListener('click',generateGraphHTML)
+        const inputChartOptions:HTMLInputElement = document.getElementById("chartOptions") as HTMLInputElement;
+        inputChartOptions.value= getDefaultChartOptions();
     }
-    const previewButtonCard:HTMLButtonElement = document.getElementById("previewButtonCard") as HTMLButtonElement;
-    previewButtonCard?.addEventListener('click',updateValuesCard);
-    const generateCardHtmlButton:HTMLButtonElement = document.getElementById("generateCardHTML") as HTMLButtonElement;
-    generateCardHtmlButton?.addEventListener('click',generateCardHTML)
-    const previewButtonGraph:HTMLButtonElement = document.getElementById("previewButtonGraph") as HTMLButtonElement;
-    previewButtonGraph?.addEventListener('click',updateValuesGraph);
-    const generateGraphHTMLButton:HTMLButtonElement = document.getElementById("generateGraphHTML") as HTMLButtonElement;
-    generateGraphHTMLButton?.addEventListener('click',generateGraphHTML)
-    const inputChartOptions:HTMLInputElement = document.getElementById("chartOptions") as HTMLInputElement;
-    inputChartOptions.value= getDefaultChartOptions();
+
 }
 function validateSeries(seriesId:Array<string>,collapse:string): Promise<AxiosResponse<any, any>>{
     let GraphParams=
@@ -285,7 +294,6 @@ function validateSeries(seriesId:Array<string>,collapse:string): Promise<AxiosRe
 function getDefaultChartOptions(): string {
     return JSON.stringify(highChartDefaultOptions);
 }
-
-initializeComponents();
-export {initializeComponents,updateValuesCard,context,defaultGraphParameters,defaultCardParameters,validateSeries,reRenderCardComponent}
+window.onload = initializeComponents;
+export {initializeComponents,updateValuesCard,context,defaultGraphParameters,defaultCardParameters,reRenderCardComponent}
 
