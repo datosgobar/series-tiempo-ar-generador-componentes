@@ -287,10 +287,6 @@ function validateSeries(seriesId:Array<string>,collapse:string): Promise<AxiosRe
     return axios.get(API_SERIES_URL,paramsObject);
 }
 
-
-function getDefaultChartOptions(): string {
-    return JSON.stringify(highChartDefaultOptions);
-}
 window.onload = initializeComponents;
 export {initializeComponents,updateValuesCard,context,defaultGraphParameters,defaultCardParameters,reRenderCardComponent}
 
