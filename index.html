@@ -328,14 +328,14 @@
 
                     </div>
 
-                    <div class="row">
-                        <div class="col-sm-12 col-md-offset-2 form-group item-form">
-                            <label>Chart Options</label><br>
-                            <textarea name = "chartOptions" id="chartOptions" class="form-control" type="text" >
-                            </textarea>
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12 col-md-offset-2 form-group item-form">-->
+<!--                            <label>Chart Options</label><br>-->
+<!--                            <textarea name = "chartOptions" id="chartOptions" class="form-control" type="text" >-->
+<!--                            </textarea>-->
 
-                        </div>
-                    </div>
+<!--                        </div>-->
+<!--                    </div>-->
 
 
                     <fieldset>
@@ -457,13 +457,13 @@
                                 <div class="form-group item-form">
                                     <div class="radio">
                                         <label for="datePickerEnabled">
-                                            <input type="radio" name="datePicker" id="datePickerEnabled" value="datePickerEnabled" required="" aria-required="true">
+                                            <input type="radio" name="datePickerEnabled" id="datePickerEnabled" value="datePickerEnabled" required="" aria-required="true">
                                             Habilitado
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label for="datePickerDisabled">
-                                            <input type="radio" name="datePicker" id="datePickerDisabled" value="datePickerDisabled" required="" aria-required="true">
+                                            <input type="radio" name="datePickerEnabled" id="datePickerDisabled" value="datePickerDisabled" required="" aria-required="true">
                                             Deshabilitado
                                         </label>
                                     </div>
@@ -587,17 +587,17 @@
                         <div class="row">
 
                             <div class="col-md-8 col-md-offset-2 item-form">
-                                <label for="numbersAbbreviateEnabled">Abreviatura de números</label>
+                                <label for="numbersAbbreviateEnabledGraph">Abreviatura de números</label>
                                 <div class="form-group item-form">
                                     <div class="radio">
-                                        <label for="numbersAbbreviateEnabled">
-                                            <input type="radio" name="numbersAbbreviate" id="numbersAbbreviateEnabled" value="numbersAbbreviateEnabled" required="" aria-required="true">
+                                        <label for="numbersAbbreviateEnabledGraph">
+                                            <input type="radio" name="numbersAbbreviate" id="numbersAbbreviateEnabledGraph" value="numbersAbbreviateEnabled" required="" aria-required="true">
                                             Habilitado
                                         </label>
                                     </div>
                                     <div class="radio">
-                                        <label for="numbersAbbreviateDisabled">
-                                            <input type="radio" name="numbersAbbreviate" id="numbersAbbreviateDisabled" value="numbersAbbreviateDisabled" required="" aria-required="true">
+                                        <label for="numbersAbbreviateDisabledGraph">
+                                            <input type="radio" name="numbersAbbreviate" id="numbersAbbreviateDisabledGraph" value="numbersAbbreviateDisabled" required="" aria-required="true">
                                             Deshabilitado
                                         </label>
                                     </div>
@@ -747,14 +747,15 @@
         <div class="row">
             <div class="col-sm-12 col-md-offset-2 margin-60" >
                 <div id="graph_example_1"></div>
-                <div id="graph_example_2"></div>
+                <div id="graph_example_N"></div>
                 <script>
-                    TSComponents.Graphic.render('graph_example_2', {
+                    TSComponents.Graphic.render('graph_example_N', {
                         colors:[0,"#0072bb",1,"#2e7d33",2,"#c62828",3,"#f9a822",4,"#6a1b99",5,"#ec407a",6,"#c2185b",7,"#039be5",8,"#6ea100"],
                         decimalLeftAxis:'2',
                         decimalRightAxis:'2',
                         graphicUrl:'https://apis.datos.gob.ar/series/api/series/?ids=tmi_arg,143.3_NO_PR_2004_A_21',
                         legendField:'title',
+                        legendLabel: {tmi_arg:'legendtmi',"143.3_NO_PR_2004_A_21": "otra legend"},
                         seriesAxis:'right',
                     })
 

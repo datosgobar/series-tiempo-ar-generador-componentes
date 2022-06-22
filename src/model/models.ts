@@ -24,6 +24,7 @@ interface DecimalToolTips {
 }
 
 interface GraphicParameters {
+    [field: string]: any;
     graphicUrl:string;
     chartOptions:HighChartOptions;
     navigator:boolean;

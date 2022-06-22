@@ -164,8 +164,8 @@ function generateSelectsInContainerLabeledById(ids: Array<string>,container_id:s
     };
     let optionHtml = "";
     options.forEach((key,value)=> optionHtml+=getOptionHTML(value,key));
-    let baseHTMLSelect = (idSerie:string)=> "<label for='chartTypeBySeries'>Tipo de gráfico para la serie: "+idSerie+" </label><br>" +
-        "<select name=\"chartTypes"+idSerie+"\" class=\"format form-control\">" +
+    let baseHTMLSelect = (idSerie:string)=> "<label for='"+container_id+"'>Tipo de gráfico para la serie: "+idSerie+" </label><br>" +
+        "<select name=\""+container_id+idSerie+"\" class=\"format form-control\">" +
         optionHtml
         +"</select>";
     let finalHTMLSelect ="";

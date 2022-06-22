@@ -64,18 +64,18 @@ let defaultGraphParameters:GraphicParameters = {
     decimalsBillion: 2,
     decimalsMillion: 2,
     displayUnits: false,
-    endDate: "inicializarEnFetchDeSerie como la mas antigua",
+    endDate: "",
     exportable: false,
     frequencySelector: false,
     graphicUrl: "",
-    legendField: "",
+    legendField: "title",
     legendLabel: undefined,
     locale: "AR",
     navigator: false,
     numbersAbbreviate: true,
     seriesAxis: undefined,
     source: "",
-    startDate: "inicializar en fetch de serie como la mas reciente",
+    startDate: "",
     title: "",
     unitsSelector: false,
     zoom: false
@@ -178,30 +178,29 @@ function updateValuesGraph () {
             }else if (value.toString().includes("Enabled")) {
                 object[key] = true;
             }
-            if(key.toString().includes('colorPalette')){
+            else if(key.toString().includes('colorPalette')){
                 let index = parseInt(key.substring(key.length-1,key.length)) as 0|1|2|3|4|5|6|7|8;
                 updatedColorsMap.set(index,value.toString());
-            }else if(key.toString().includes("chartOptions")){
-                let jsonOptions= value as string;
-                if(jsonOptions.includes(JSON.stringify(highChartDefaultOptions))){
-                    // do nothing
-                }else{
-                    object[key] = JSON.parse(jsonOptions)
-                }
-            }else if(key.toString().includes("chartType")){
-                if(key.toString().includes("chartTypes")){
+            }
+            // else if(key.toString().includes("chartOptions")){
+            //     let jsonOptions= value as string;
+            //     if(jsonOptions.includes(JSON.stringify(highChartDefaultOptions))){
+            //         // do nothing
+            //     }else{
+            //         object[key] = JSON.parse(jsonOptions)
+            //     }
+            // }
+            else if(key.toString().includes("chartTypes") && value != defaultGraphParameters.chartType){
                     chartTypes[key.toString().split('chartTypes')[1]] = value as ChartType;
-                }
-
             } else if(key.toString().includes("BySeries")&& value){
                 let [realKey,series] = key.split('BySeries');
                 if (!object[realKey]) {
-                    object[realKey] = {...objectBySeries}
+                    object[realKey] = {[series]:{}}
                 }
                 let bySeries = object[realKey] as BySeriesObject;
                 bySeries[series] = realKey.includes('decimal')?parseInt(value.toString()):value;
             }
-            else if(!object[key]){
+            else if(!object[key]&& value && value != defaultGraphParameters[key]){
                 object[key] = value;
             }
         });
@@ -269,9 +268,7 @@ function initializeComponents() {
         previewButtonGraph?.addEventListener('click',updateValuesGraph);
         const generateGraphHTMLButton:HTMLButtonElement = document.getElementById("generateGraphHTML") as HTMLButtonElement;
         generateGraphHTMLButton?.addEventListener('click',generateGraphHTML)
-        const inputChartOptions:HTMLInputElement = document.getElementById("chartOptions") as HTMLInputElement;
-        inputChartOptions.value= getDefaultChartOptions();
-    }
+}
 
 }
 function validateSeries(seriesId:Array<string>,collapse:string): Promise<AxiosResponse<any, any>>{
