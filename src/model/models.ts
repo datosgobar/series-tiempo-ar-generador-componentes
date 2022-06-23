@@ -81,7 +81,7 @@ interface ComponentesContext {
     graphicParameters:GraphicParameters|undefined;
     cardParameters:CardParameters|undefined;
     cardErrorMap: Array<{error:string }>;
-    graphErrorMap: Array<string>;
+    graphErrorMap: Array<{error:string } >;
     seriesIdGraph: Array<string>;
 }
 export type {ComponentesContext,BySeriesObject,GraphicParameters,CardParameters,ChartTypes,ChartType};

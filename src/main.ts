@@ -21,6 +21,8 @@ import {
     generateGraphHTML, generateLegendLabelInputs, generateSeriesAxisSelects, updateCardErrorContainer,
     updateGraphErrorContainer
 } from "./utils";
+import DateTimeFormat = Intl.DateTimeFormat;
+let dateTimeFormat:DateTimeFormat = new DateTimeFormat('fr-ca');
 let objectBySeries : BySeriesObject = {};
 
 const windowObject = window as any;
@@ -182,14 +184,6 @@ function updateValuesGraph () {
                 let index = parseInt(key.substring(key.length-1,key.length)) as 0|1|2|3|4|5|6|7|8;
                 updatedColorsMap.set(index,value.toString());
             }
-            // else if(key.toString().includes("chartOptions")){
-            //     let jsonOptions= value as string;
-            //     if(jsonOptions.includes(JSON.stringify(highChartDefaultOptions))){
-            //         // do nothing
-            //     }else{
-            //         object[key] = JSON.parse(jsonOptions)
-            //     }
-            // }
             else if(key.toString().includes("chartTypes") && value != defaultGraphParameters.chartType){
                     chartTypes[key.toString().split('chartTypes')[1]] = value as ChartType;
             } else if(key.toString().includes("BySeries")&& value){
@@ -199,6 +193,10 @@ function updateValuesGraph () {
                 }
                 let bySeries = object[realKey] as BySeriesObject;
                 bySeries[series] = realKey.includes('decimal')?parseInt(value.toString()):value;
+            }
+            else if(key.toString().includes('Date')&&value){
+                let stringDate:string = dateTimeFormat.format(Date.parse(value.toString()));
+                object[key]=stringDate;
             }
             else if(!object[key]&& value && value != defaultGraphParameters[key]){
                 object[key] = value;
@@ -211,10 +209,10 @@ function updateValuesGraph () {
         };
 
     context.graphicParameters = filterAllFalsyValues(objectComponent);
-    let seriesIdFromGraphUrl =queryString.parseUrl(context.graphicParameters?.graphicUrl as string)
+    let seriesIdFromGraphUrl =queryString.parseUrl(context.graphicParameters?.graphicUrl? context.graphicParameters.graphicUrl as string :"");
     let seriesId :ParsedQuery= seriesIdFromGraphUrl?.query ;
     let query = seriesId as {ids:string};
-    let ids:Array<string> = Array.from(query.ids.split(','));
+    let ids:Array<string> = Array.from(query.ids?query.ids.split(','):"");
     context.seriesIdGraph = Array.from(ids);
     context.seriesIdGraph.forEach((element)=>objectBySeries[element]={});
     validateSeries(ids,'')
@@ -239,7 +237,10 @@ function updateValuesGraph () {
                 }
                 // console.log(context.errorMap.values('\n'));
                 let oneStringErrors:string='' ;
-                context.graphErrorMap.forEach((value)=>{oneStringErrors+='\n'+value});
+                context.graphErrorMap.forEach(
+                    (value)=>
+                    {oneStringErrors+='\n'+value.error}
+                    );
                 updateGraphErrorContainer(oneStringErrors);
                 clearGraph();
             }
