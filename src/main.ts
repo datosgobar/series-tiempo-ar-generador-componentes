@@ -11,14 +11,19 @@ import {
 import axios from 'axios';
 import {AxiosResponse} from 'axios';
 import queryString, { ParsedQuery } from 'query-string';
-import {defaultOptions as highChartDefaultOptions} from 'highcharts';
+// import {defaultOptions as highChartDefaultOptions} from 'highcharts';
 import {
     clearCard,
     clearGraph,
     filterAllFalsyValues,
     generateCardHTML,
-    generateChartTypeSelects, generateDecimalNumbersInTooltipBySeriesInput,
-    generateGraphHTML, generateLegendLabelInputs, generateSeriesAxisSelects, updateCardErrorContainer,
+    generateChartTypeSelects,
+    generateDecimalNumbersInTooltipBySeriesInput,
+    generateGraphHTML,
+    generateLegendLabelInputs,
+    generateSeriesAxisSelects,
+    reduceMapToDiffParameters,
+    updateCardErrorContainer,
     updateGraphErrorContainer
 } from "./utils";
 import DateTimeFormat = Intl.DateTimeFormat;
@@ -52,8 +57,8 @@ let defaultCardParameters:CardParameters= {
 let defaultColorsMap = new Map<0|1|2|3|4|5|6|7|8, string>().set(0,"#0072bb").set(1,"#2e7d33").set(2,"#c62828").set(3,"#f9a822").set(4,"#6a1b99").set(5,"#ec407a").set(6,"#c2185b").set(7,"#039be5").set(8,"#6ea100");
 let defaultGraphParameters:GraphicParameters = {
     aggregationSelector: false,
-    backgroundColor: "#cdcdcd",
-    chartOptions: highChartDefaultOptions, //TODO: default como objetos vacios o agrego undefined a la interface y los pongo como undefined?
+    backgroundColor: "#ffffff",
+    chartOptions: undefined,//highChartDefaultOptions, //TODO: default como objetos vacios o agrego undefined a la interface y los pongo como undefined?
     chartType: "line",
     chartTypeSelector: false,
     chartTypes: {},
@@ -86,7 +91,7 @@ let defaultGraphParameters:GraphicParameters = {
 
 let counterCard:number = 1;
 let counterGraph:number = 1;
-
+// seriede prueba:_https://apis.datos.gob.ar/series/api/series/?ids=tmi_arg,143.3_NO_PR_2004_A_21
   function reRenderCardComponent  () {
     console.log("entre en reload components: estos son los cardParameters agraficar")
     console.log(context.cardParameters)
@@ -101,14 +106,19 @@ let counterGraph:number = 1;
 }
 function reRenderGraphComponent  () {
     console.log("entre en reload components: estos son los graphParam agraficar")
-    console.log(context.graphicParameters)
+    let notDefaultGraphParameters = Object.assign({},context.graphicParameters); //arranco con los values actuales
+    const mapDefault = new Map (Object.entries({...defaultGraphParameters}));//  el valor por default de numbAbb es true, pero esta seteado en false arriba por practicidad (ver comentario arriba)
+    let mapOutput = new Map (Object.entries(notDefaultGraphParameters));
+    reduceMapToDiffParameters(mapOutput,mapDefault);
+    notDefaultGraphParameters = Object.fromEntries(mapOutput) as GraphicParameters;
+    console.log(notDefaultGraphParameters)
 
     let card :HTMLElement | null = document.getElementById('graph_example_'+counterGraph.toString());
     counterGraph=counterGraph+1;
 
     if(card)
         card.outerHTML="<div id=\"graph_example_"+counterGraph.toString()+"\"></div>"
-    TSComponents.Graphic.render('graph_example_'+counterGraph.toString(), context.graphicParameters);
+    TSComponents.Graphic.render('graph_example_'+counterGraph.toString(), notDefaultGraphParameters);
 
 }
 function clearErrorMap() {

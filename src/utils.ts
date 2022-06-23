@@ -7,7 +7,8 @@ function HTMLRowsForNotDefaultGraphParameters(){
     outputGraphParameters = Object.assign({},context.graphicParameters); //arranco con los values actuales
     const mapDefault = new Map (Object.entries({...defaultGraphParameters}));//  el valor por default de numbAbb es true, pero esta seteado en false arriba por practicidad (ver comentario arriba)
     let mapOutput = new Map (Object.entries(outputGraphParameters));
-    let htmlOutputForNotDefaultProps = getHtmlForDiffFields(mapOutput, mapDefault);
+    reduceMapToDiffParameters(mapOutput,mapDefault);
+    let htmlOutputForNotDefaultProps = getHtmlFromMap(mapOutput);
     return htmlOutputForNotDefaultProps;
 }
 function filterAllFalsyValues(obj:any){
@@ -106,20 +107,22 @@ function HTMLRowsForNotDefaultCardParameters(){
     outputCardParameters = Object.assign({},context.cardParameters); //arranco con los values actuales
     const mapDefault = new Map (Object.entries({...defaultCardParameters,numbersAbbreviate:true}));//  el valor por default de numbAbb es true, pero esta seteado en false arriba por practicidad (ver comentario arriba)
     let mapOutput = new Map (Object.entries(outputCardParameters));
-    let htmlOutputForNotDefaultProps:string=getHtmlForDiffFields(mapOutput,mapDefault);
+    reduceMapToDiffParameters(mapOutput,mapDefault);
+    let htmlOutputForNotDefaultProps:string=getHtmlFromMap(mapOutput);
 
     return htmlOutputForNotDefaultProps;
 }
-
-function getHtmlForDiffFields(mapOutput: Map<any, any> , mapDefault: Map<any,any>) {
-    let htmlOutputForNotDefaultProps: string = ""
-    mapOutput.forEach((value, key, map) => {
-        if (mapDefault.get(key) == value) {
+function reduceMapToDiffParameters(mapToReduce:Map<any,any>,referenceMap:Map<any,any>) {
+    mapToReduce.forEach((value, key, map) => {
+        if (referenceMap.get(key) == value) {
             map.delete(key);
         }
     })
-    console.log(mapOutput);
-    mapOutput.forEach((value, key) => {
+}
+function getHtmlFromMap(map: Map<any, any> ) {
+    let htmlOutputForNotDefaultProps: string = ""
+    console.log(map);
+    map.forEach((value, key) => {
         let separatorBegin = (value != true && value != false) ? "'" : " ";
         let separatorEnd = separatorBegin;
 
@@ -149,22 +152,22 @@ function getHtmlForDiffFields(mapOutput: Map<any, any> , mapDefault: Map<any,any
 function generateChartTypeSelects(ids: Array<string>) {
     let options = new Map<string,string>();
     options.set("line","Línea").set("area","Área").set("column","Columna");
-    generateSelectsInContainerLabeledById(ids,'chartTypeBySeries',options);
+    generateSelectsInContainerLabeledById(ids,'chartTypeBySeries',options,"Tipo de gráfico para la serie:");
 }
 function generateSeriesAxisSelects(ids: Array<string>){
     let options = new Map<string,string>();
     options.set("right","Derecha").set("left","Izquierda");
-    generateSelectsInContainerLabeledById(ids,"seriesAxisBySeries",options);
+    generateSelectsInContainerLabeledById(ids,"seriesAxisBySeries",options,"Ubicación del eje para la serie:");
 }
-function generateSelectsInContainerLabeledById(ids: Array<string>,container_id:string,options:Map<string,string>) {
+function generateSelectsInContainerLabeledById(ids: Array<string>,container_id:string,options:Map<string,string>,legend:string) {
     let container = document.getElementById(container_id);
     let getOptionHTML = (optionValue:string,optionLegend:string)=>
     {
        return "<option value=\""+optionValue+"\">"+optionLegend+"</option>"
     };
-    let optionHtml = "";
+    let optionHtml = getOptionHTML("","");
     options.forEach((key,value)=> optionHtml+=getOptionHTML(value,key));
-    let baseHTMLSelect = (idSerie:string)=> "<label for='"+container_id+"'>Tipo de gráfico para la serie: "+idSerie+" </label><br>" +
+    let baseHTMLSelect = (idSerie:string)=> "<label for='"+container_id+"'>"+legend+idSerie+" </label><br>" +
         "<select name=\""+container_id+idSerie+"\" class=\"format form-control\">" +
         optionHtml
         +"</select>";
@@ -222,6 +225,6 @@ function clearGraph(){
     }
 }
 export  {HTMLRowsForNotDefaultGraphParameters,generateCardHTML,filterAllFalsyValues,generateGraphHTML,
-    HTMLRowsForNotDefaultCardParameters,getHtmlForDiffFields,generateChartTypeSelects,clearGraph,clearCard,
+    HTMLRowsForNotDefaultCardParameters,getHtmlFromMap,generateChartTypeSelects,clearGraph,clearCard,
     updateGraphErrorContainer,updateCardErrorContainer,generateLegendLabelInputs,generateSeriesAxisSelects,
-    generateDecimalNumbersInTooltipBySeriesInput};
+    generateDecimalNumbersInTooltipBySeriesInput,reduceMapToDiffParameters};
