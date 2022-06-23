@@ -746,50 +746,6 @@
         <div class="row">
             <div class="col-sm-12 col-md-offset-2 margin-60" >
                 <div id="graph_example_1"></div>
-                <div id="graph_example_N"></div>
-                <script>
-                    TSComponents.Graphic.render('graph_example_N', {
-                        colors:[0,"#0072bb",1,"#2e7d33",2,"#c62828",3,"#f9a822",4,"#6a1b99",5,"#ec407a",6,"#c2185b",7,"#039be5",8,"#6ea100"],
-                        decimalLeftAxis:'2',
-                        decimalRightAxis:'2',
-                        graphicUrl:'https://apis.datos.gob.ar/series/api/series/?ids=tmi_arg,143.3_NO_PR_2004_A_21',
-                        legendField:'title',
-                        legendLabel: {tmi_arg:'legendtmi',"143.3_NO_PR_2004_A_21": "otra legend"},
-                        seriesAxis:'right',
-                    })
-
-                //     let  map=  new Map().set(0,"#0072BB").set(1,"#2E7D33").set(2,"#C62828").set(3,"#F9A822").set(4,"#6A1B99").set(5,"#EC407A").set(6,"#C2185B").set(7,"#039BE5").set(8,"#6EA100");
-                //     let array = Array.from(map)
-                //     let formattedArray  = array.flatMap(x=>x)
-                //     console.log(formattedArray)
-                // TSComponents.Graphic.render('graph_example_2',
-                // {
-                // "aggregationSelector": false,
-                // "backgroundColor": "#cdcdcd",
-                // "chartType": "line",
-                // "chartTypeSelector": false,
-                // "chartTypes": {},
-                // "colors":formattedArray ,
-                // "datePickerEnabled": false,
-                // "decimalLeftAxis": "2",
-                // "decimalRightAxis": "2",
-                // "decimalsBillion": "2",
-                // "decimalsMillion": "2",
-                // "displayUnits": false,
-                // "exportable": false,
-                // "frequencySelector": false,
-                // "graphicUrl": "https://apis.datos.gob.ar/series/api/series/?ids=tmi_arg",
-                // "legendField": "title",
-                // "locale": "AR",
-                // "navigator": false,
-                // "numbersAbbreviate": true,
-                // "seriesAxis": "right",
-                // "unitsSelector": false,
-                // "zoom": false
-                // }
-                // );
-
-                </script>
             </div>
             <div class="col-sm-12  navbar-error" id="graph-error-container">
             </div>
