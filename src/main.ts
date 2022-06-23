@@ -257,7 +257,7 @@ function initializeComponents() {
             cardParameters:defaultCardParameters,
             graphicParameters: defaultGraphParameters,
             cardErrorMap: new Array<{error:string }>(),
-            graphErrorMap: new Array<string>(),
+            graphErrorMap: new Array<{ error:string }>(),
             seriesIdGraph: new Array<string>(),
 
         }
