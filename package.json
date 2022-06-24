@@ -14,11 +14,7 @@
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
-    "@types/highcharts": "^7.0.0",
-    "@types/query-string": "^6.3.0",
     "ar-poncho": "^2.0.221",
-    "axios": "^0.27.2",
-    "highcharts": "^10.1.0",
-    "query-string": "^7.1.1"
+    "axios": "^0.27.2"
   }
 }
