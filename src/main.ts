@@ -23,7 +23,7 @@ import {
     generateLegendLabelInputs,
     generateSeriesAxisSelects,
     reduceMapToDiffParameters,
-    updateCardErrorContainer,
+    updateCardErrorContainer, updateCodeSnippetCard, updateCodeSnippetGraph,
     updateGraphErrorContainer
 } from "./utils";
 import DateTimeFormat = Intl.DateTimeFormat;
@@ -212,6 +212,7 @@ function updateValuesGraph () {
                 object[key] = value;
             }
         });
+    reduceMapToDiffParameters(updatedColorsMap,defaultColorsMap);
     object['colors'] = Array.from( updatedColorsMap).flatMap(x=>x);
     let objectComponent : GraphicParameters =
         {...defaultGraphParameters,
@@ -235,6 +236,7 @@ function updateValuesGraph () {
                 generateDecimalNumbersInTooltipBySeriesInput(ids);
                 reRenderGraphComponent();
                 updateGraphErrorContainer("");
+                updateCodeSnippetGraph("                                        // presione 'Generar HTML' para mostrar aquí el codigo HTML utilzado\n                                        para renderizar la vista previa del Graph.")
                 clearErrorMap();
             }
         )
@@ -278,8 +280,10 @@ function initializeComponents() {
         const previewButtonGraph:HTMLButtonElement = document.getElementById("previewButtonGraph") as HTMLButtonElement;
         previewButtonGraph?.addEventListener('click',updateValuesGraph);
         const generateGraphHTMLButton:HTMLButtonElement = document.getElementById("generateGraphHTML") as HTMLButtonElement;
-        generateGraphHTMLButton?.addEventListener('click',generateGraphHTML)
-}
+        generateGraphHTMLButton?.addEventListener('click',generateGraphHTML);
+        updateCodeSnippetGraph("                                        // presione 'Generar HTML' para mostrar aquí el codigo HTML utilzado\n                                        para renderizar la vista previa del Graph.")
+        updateCodeSnippetCard("                                        // presione 'Generar HTML' para mostrar aquí el codigo HTML utilzado\n                                        para renderizar la vista previa de la Card.")
+    }
 
 }
 function validateSeries(seriesId:Array<string>,collapse:string): Promise<AxiosResponse<any, any>>{

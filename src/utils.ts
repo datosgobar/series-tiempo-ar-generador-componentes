@@ -55,10 +55,8 @@ function generateCardHTML() {
         "<span class='p'>&gt;</span>\n" +
         "</pre>"
 
-    let codeTag = document.getElementById('codeTagCard');
-    if(codeTag){
-        codeTag.innerHTML = html;
-    }
+    updateCodeSnippetCard(html);
+
 }
 function generateGraphHTML() {
     let html:string ="<pre>\n" +
@@ -68,7 +66,7 @@ function generateGraphHTML() {
         "<span class='na'>id</span>" +
         "<span class='o'>=</span>" +
         "<span class='s'>'tmi'</span>" +
-        "<span class='p'>&gt;&lt;/</span> " +
+        "<span class='p'>&gt;&lt;/</span>" +
         "<span class='nt'>div</span>" +
         "<span class='p'>&gt;</span>\n\n" +
         "<span class='c'>&lt;!-- JS que genera el Graph en el div --&gt;</span>\n" +
@@ -97,10 +95,19 @@ function generateGraphHTML() {
         "<span class='nt'>script</span>" +
         "<span class='p'>&gt;</span>\n" +
         "</pre>"
+        updateCodeSnippetGraph(html);
 
+}
+function updateCodeSnippetGraph(content:string){
     let codeTag = document.getElementById('codeTagGraph');
     if(codeTag){
-        codeTag.innerHTML = html;
+        codeTag.innerHTML = content;
+    }
+}
+function updateCodeSnippetCard(content:string){
+    let codeTag = document.getElementById('codeTagCard');
+    if(codeTag){
+        codeTag.innerHTML = content;
     }
 }
 function HTMLRowsForNotDefaultCardParameters(){
@@ -227,4 +234,4 @@ function clearGraph(){
 export  {HTMLRowsForNotDefaultGraphParameters,generateCardHTML,filterAllFalsyValues,generateGraphHTML,
     HTMLRowsForNotDefaultCardParameters,getHtmlFromMap,generateChartTypeSelects,clearGraph,clearCard,
     updateGraphErrorContainer,updateCardErrorContainer,generateLegendLabelInputs,generateSeriesAxisSelects,
-    generateDecimalNumbersInTooltipBySeriesInput,reduceMapToDiffParameters};
+    generateDecimalNumbersInTooltipBySeriesInput,reduceMapToDiffParameters,updateCodeSnippetGraph,updateCodeSnippetCard};
