@@ -3,6 +3,7 @@ import { CardParameters, GraphicParameters} from "./model/models";
 
 let outputCardParameters:CardParameters ;
 let outputGraphParameters:GraphicParameters;
+const  dynamicBySeriesFields : Array<string> = ['legendLabel','seriesAxis','chartTypes','decimalTooltips'];
 function HTMLRowsForNotDefaultGraphParameters(){
     outputGraphParameters = Object.assign({},context.graphicParameters); //arranco con los values actuales
     const mapDefault = new Map (Object.entries({...defaultGraphParameters}));//  el valor por default de numbAbb es true, pero esta seteado en false arriba por practicidad (ver comentario arriba)
@@ -133,8 +134,8 @@ function getHtmlFromMap(map: Map<any, any> ) {
         let separatorBegin = (value != true && value != false) ? "'" : " ";
         let separatorEnd = separatorBegin;
 
-        if(key.toString().includes('chartOptions')){
-            value = JSON.stringify(value);
+        if(dynamicBySeriesFields.includes(key.toString())){
+            value = JSON.stringify(value); // convierto object en string
             separatorEnd='';
             separatorBegin='';
         }
@@ -159,7 +160,7 @@ function getHtmlFromMap(map: Map<any, any> ) {
 function generateChartTypeSelects(ids: Array<string>) {
     let options = new Map<string,string>();
     options.set("line","Línea").set("area","Área").set("column","Columna");
-    generateSelectsInContainerLabeledById(ids,'chartTypeBySeries',options,"Tipo de gráfico para la serie:");
+    generateSelectsInContainerLabeledById(ids,'chartTypesBySeries',options,"Tipo de gráfico para la serie:");
 }
 function generateSeriesAxisSelects(ids: Array<string>){
     let options = new Map<string,string>();
@@ -231,7 +232,17 @@ function clearGraph(){
         errorDiv.innerHTML = "" ;
     }
 }
+function  generateBySeriesInputs(ids:Array<string>){
+    if(context && context.seriesIdGraph && JSON.stringify(context.seriesIdGraph)===JSON.stringify(ids)){
+        return; // si los ids no cambiaron no vuelvoa renderizar.De estamanera no borro  los valores
+    }
+    generateLegendLabelInputs(ids)
+    generateChartTypeSelects(ids);
+    generateSeriesAxisSelects(ids);
+    generateDecimalNumbersInTooltipBySeriesInput(ids);
+}
 export  {HTMLRowsForNotDefaultGraphParameters,generateCardHTML,filterAllFalsyValues,generateGraphHTML,
     HTMLRowsForNotDefaultCardParameters,getHtmlFromMap,generateChartTypeSelects,clearGraph,clearCard,
     updateGraphErrorContainer,updateCardErrorContainer,generateLegendLabelInputs,generateSeriesAxisSelects,
-    generateDecimalNumbersInTooltipBySeriesInput,reduceMapToDiffParameters,updateCodeSnippetGraph,updateCodeSnippetCard};
+    generateDecimalNumbersInTooltipBySeriesInput,reduceMapToDiffParameters,updateCodeSnippetGraph,updateCodeSnippetCard,
+    generateBySeriesInputs};

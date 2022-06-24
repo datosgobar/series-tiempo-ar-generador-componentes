@@ -15,24 +15,21 @@ import queryString, { ParsedQuery } from 'query-string';
 import {
     clearCard,
     clearGraph,
-    filterAllFalsyValues,
+    filterAllFalsyValues, generateBySeriesInputs,
     generateCardHTML,
-    generateChartTypeSelects,
-    generateDecimalNumbersInTooltipBySeriesInput,
     generateGraphHTML,
-    generateLegendLabelInputs,
-    generateSeriesAxisSelects,
     reduceMapToDiffParameters,
     updateCardErrorContainer, updateCodeSnippetCard, updateCodeSnippetGraph,
     updateGraphErrorContainer
 } from "./utils";
 import DateTimeFormat = Intl.DateTimeFormat;
 let dateTimeFormat:DateTimeFormat = new DateTimeFormat('fr-ca');
-let objectBySeries : BySeriesObject = {};
 
 const windowObject = window as any;
 const TSComponents = windowObject.TSComponents;
 const API_SERIES_URL:string = "https://apis.datos.gob.ar/series/api/series/";
+const defaultStringCodeSnippetCard = "// presione 'Generar HTML' para mostrar aquí el codigo HTML utilzado\n  para renderizar la vista previa de la Card.";
+const defaultStringCodeSnippetGraph = "// presione 'Generar HTML' para mostrar aquí el codigo HTML utilzado\n para renderizar la vista previa del Graph.";
 let context:ComponentesContext;
 let defaultCardParameters:CardParameters= {
     apiBaseUrl: "http://apis.datos.gob.ar/series/api",
@@ -126,6 +123,8 @@ function clearErrorMap() {
     // updateErrorContainer('');
 }
 
+
+
 function updateValuesCard () {
     const form:HTMLFormElement = document.getElementById("form-card") as HTMLFormElement;
     const formData:FormData = new FormData(form);
@@ -158,6 +157,7 @@ function updateValuesCard () {
                 clearCard();
                 reRenderCardComponent();
                 updateCardErrorContainer("");
+                updateCodeSnippetCard(defaultStringCodeSnippetCard)
                 clearErrorMap();
             }
         )
@@ -224,20 +224,19 @@ function updateValuesGraph () {
     let seriesId :ParsedQuery= seriesIdFromGraphUrl?.query ;
     let query = seriesId as {ids:string};
     let ids:Array<string> = Array.from(query.ids?query.ids.split(','):"");
-    context.seriesIdGraph = Array.from(ids);
-    context.seriesIdGraph.forEach((element)=>objectBySeries[element]={});
+    let arryOfIds = Array.from(ids);
     validateSeries(ids,'')
         .then(
             ()=>{
                 clearGraph();
-                generateLegendLabelInputs(ids)
-                generateChartTypeSelects(ids);
-                generateSeriesAxisSelects(ids);
-                generateDecimalNumbersInTooltipBySeriesInput(ids);
+                generateBySeriesInputs(ids);
+
                 reRenderGraphComponent();
                 updateGraphErrorContainer("");
-                updateCodeSnippetGraph("                                        // presione 'Generar HTML' para mostrar aquí el codigo HTML utilzado\n                                        para renderizar la vista previa del Graph.")
+                updateCodeSnippetGraph("// presione 'Generar HTML' para mostrar aquí el codigo HTML utilzado\n para renderizar la vista previa del Graph.")
                 clearErrorMap();
+                context.seriesIdGraph = arryOfIds;
+
             }
         )
         .catch(
@@ -281,8 +280,8 @@ function initializeComponents() {
         previewButtonGraph?.addEventListener('click',updateValuesGraph);
         const generateGraphHTMLButton:HTMLButtonElement = document.getElementById("generateGraphHTML") as HTMLButtonElement;
         generateGraphHTMLButton?.addEventListener('click',generateGraphHTML);
-        updateCodeSnippetGraph("                                        // presione 'Generar HTML' para mostrar aquí el codigo HTML utilzado\n                                        para renderizar la vista previa del Graph.")
-        updateCodeSnippetCard("                                        // presione 'Generar HTML' para mostrar aquí el codigo HTML utilzado\n                                        para renderizar la vista previa de la Card.")
+        updateCodeSnippetGraph(defaultStringCodeSnippetGraph)
+        updateCodeSnippetCard(defaultStringCodeSnippetCard)
     }
 
 }
