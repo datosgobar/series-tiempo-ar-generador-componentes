@@ -22,13 +22,12 @@
 
     <header>
         <nav class="navbar  navbar-default navbar-fixed-top pos-f-t  " role="navigation">
+
             <div class="container">
                 <div class="navbar-header">
-                    <div class="navbar-collapse collapse">
-                        <a class=" nav navbar-brand" href="#" aria-label="Argentina.gob.ar Presidencia de la Nación">
-                            <img alt="Argentina.gob.ar" src="src/img/argentinagob.svg" height="50">
-                        </a>
-                    </div>
+                    <a class="navbar-brand" href="#" aria-label="Argentina.gob.ar Presidencia de la Nación">
+                        <img alt="Argentina.gob.ar" src="src/img/argentinagob.svg" height="50">
+                    </a>
                 </div>
             </div>
         </nav>
@@ -46,6 +45,7 @@
 
         <div class="index-header m-y-4">
             <h3 class="text-primary " id="card-header">Formulario de previsualizacion Card</h3>
+
         </div>
         <div class="row">
             <div class="col-sm-8 mt-2">
@@ -56,7 +56,7 @@
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
                             <label for="serieId">Ingresar ID de la serie</label>
                             <input  type="text"  class="form-control" name="serieId" required aria-required="true">
-
+                              
                         </div>
                     </div>
 
@@ -69,7 +69,7 @@
                                 <option value="US">US</option>
                             </select>
                         </div>
-
+                        
                     </div>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
@@ -85,7 +85,7 @@
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
                             <label for="exampleColorInput" class="form-label">Color picker</label>
                             <input type="color" class="form-control form-control-color" name="color" id="exampleColorInput" value="#563d7c" title="Choose your color">
-                        </div>
+                        </div>  
                     </div>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 form-group item-form">
@@ -96,24 +96,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2 item-form">
-                            <label for="explicitSignEnabled">Signo explícito</label>
-                            <div class="form-group item-form">
-                                <div class="radio">
-                                    <label for="explicitSignEnabled">
-                                        <input type="radio" name="explicitSign" id="explicitSignEnabled" value="explicitSignEnabled" required="" aria-required="true">
-                                        Habilitado
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label for="explicitSignDisabled">
-                                        <input type="radio" name="explicitSign" id="explicitSignDisabled" value="explicitSignDisabled" required="" aria-required="true">
-                                        Deshabilitado
-                                    </label>
-                                </div>
-                                <p class="help-block error hidden">Ingresá el dato</p>
-                            </div>
+                    <div class="row form-group item-form">
+                        <div class="form-check form-switch ">
+                            <input class="form-check-input" type="checkbox" role="switch" name="explicitSign" />
+                            <label class="form-check-label" for="explicitSign">Signo explícito</label>
                         </div>
                     </div>
 
@@ -137,44 +123,16 @@
                         </div>
                     </div>
 
-                    <div class="row ">
-                        <div class="col-md-8 col-md-offset-2 item-form">
-                            <label for="hasFrameEnabled">Marco alrededor de card</label>
-                            <div class="form-group item-form">
-                                <div class="radio">
-                                    <label for="hasFrameEnabled">
-                                        <input type="radio" name="hasFrame" id="hasFrameEnabled" value="hasFrameEnabled" required="" aria-required="true">
-                                        Habilitado
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label for="hasFrameDisabled">
-                                        <input type="radio" name="hasFrame" id="hasFrameDisabled" value="hasFrameDisabled" required="" aria-required="true">
-                                        Deshabilitado
-                                    </label>
-                                </div>
-                                <p class="help-block error hidden">Ingresá el dato</p>
-                            </div>
+                    <div class="row form-group item-form">
+                        <div class="form-check form-switch ">
+                            <input class="form-check-input" type="checkbox" role="switch" name="hasFrame" />
+                            <label class="form-check-label" for="hasFrame">Marco alrededor de card</label>
                         </div>
                     </div>
-                    <div class="row ">
-                        <div class="col-md-8 col-md-offset-2 item-form">
-                            <label for="hasColorBarEnabled">Barra de color</label>
-                            <div class="form-group item-form">
-                                <div class="radio">
-                                    <label for="hasColorBarEnabled">
-                                        <input type="radio" name="hasColorBar" id="hasColorBarEnabled" value="hasColorBarEnabled" required="" aria-required="true">
-                                        Habilitado
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label for="hasColorBarDisabled">
-                                        <input type="radio" name="hasColorBar" id="hasColorBarDisabled" value="hasColorBarDisabled" required="" aria-required="true">
-                                        Deshabilitado
-                                    </label>
-                                </div>
-                                <p class="help-block error hidden">Ingresá el dato</p>
-                            </div>
+                    <div class="row form-group item-form">
+                        <div class="form-check form-switch ">
+                            <input class="form-check-input" type="checkbox" role="switch" name="hasColorBar" />
+                            <label class="form-check-label" for="colorBar">Barra de color</label>
                         </div>
                     </div>
 
@@ -202,24 +160,10 @@
                             <input type="number" class="form-control" name="decimals" value="2">
                         </div>
                     </div>
-                    <div class="row ">
-                        <div class="col-md-8 col-md-offset-2 item-form">
-                            <label for="numbersAbbreviateEnabled">Abreviar números</label>
-                            <div class="form-group item-form">
-                                <div class="radio">
-                                    <label for="numbersAbbreviateEnabled">
-                                        <input type="radio" name="numbersAbbreviate" id="numbersAbbreviateEnabled" value="numbersAbbreviateEnabled" required="" aria-required="true">
-                                        Habilitado
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label for="numbersAbbreviateDisabled">
-                                        <input type="radio" name="numbersAbbreviate" id="numbersAbbreviateDisabled" value="numbersAbbreviateDisabled" required="" aria-required="true">
-                                        Deshabilitado
-                                    </label>
-                                </div>
-                                <p class="help-block error hidden">Ingresá el dato</p>
-                            </div>
+                    <div class="row form-group item-form">
+                        <div class="form-check form-switch ">
+                            <input class="form-check-input" type="checkbox" role="switch" name="numbersAbbreviate" checked />
+                            <label class="form-check-label" for="numbersAbbreviate">Abreviar números </label>
                         </div>
                     </div>
                     <div class="row">
@@ -235,31 +179,16 @@
                         </div>
                     </div>
 
-                    <div class="row ">
-
-                        <div class="col-md-8 col-md-offset-2 item-form">
-                            <label for="isPercentageEnabled">Valor porcentual</label>
-                            <div class="form-group item-form">
-                                <div class="radio">
-                                    <label for="isPercentageEnabled">
-                                        <input type="radio" name="isPercentage" id="isPercentageEnabled" value="isPercentageEnabled" required="" aria-required="true">
-                                        Habilitado
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label for="isPercentageDisabled">
-                                        <input type="radio" name="isPercentage" id="isPercentageDisabled" value="isPercentageDisabled" required="" aria-required="true">
-                                        Deshabilitado
-                                    </label>
-                                </div>
-                                <p class="help-block error hidden">Ingresá el dato</p>
-                            </div>
+                    <div class="row form-group item-form">
+                        <div class="form-check form-switch ">
+                            <input class="form-check-input" type="checkbox" role="switch" name="isPercentage"  />
+                            <label class="form-check-label" for="isPercentage">Valor porcentual </label>
                         </div>
                     </div>
 
 
 
-
+                    
                 </form>
 
 
@@ -268,12 +197,11 @@
             <div class="row">
                 <div class="col-sm-4 margin-60" >
                     <div id="card_example_1"></div>
-
                 </div>
-                <div class="col-sm-4 navbar-error" id="card-error-container">
+                <div class="col-sm-4 navbar-error" id="error-container">
                 </div>
                 <div class="col-sm-4 margin-60">
-                    <input value="Actualizar vista previa" type="button" class="btn btn-primary" id="previewButtonCard">
+                    <input value="Actualizar vista previa" type="button" class="btn btn-primary" id="previewButton">
                 </div>
             </div>
 
@@ -287,6 +215,8 @@
                 <div class="col-sm-12 codehilite">
                                 <pre class=" language-js">
                                     <code id="codeTagCard">
+                                        // aqui se mostrara el codigo HTML utilzado
+                                        para renderizar la vista previa de la card.
                                     </code>
                                 </pre>
                 </div>
