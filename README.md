@@ -23,5 +23,5 @@ Los campos del formulario que se correspondan con una personalización de una se
 
 ### Modo de uso
 Indicar URL de serie/s a representar en el gráfico y clickear en botón de previsualización, luego de esto aparecera , debajo del formulario ,  la vista previa (o cualquier error en la elección de  parámetros) de  dicha/s serie/s correspondiente con todos los valores default .
-Lo siguiente es modificar los distintos parámetros del formulario y clickear previsualizar cada vez que se quiera hasta llegar a la versión que más se ajuste a lo deseado.
+Lo siguiente es modificar los distintos parámetros del formulario y clickear previsualizar cada vez que se quiera hasta llegar a la versión que más se ajuste a lo deseado. 
 Finalmente clickear botón 'Generar HTML' , esto generará  el código HTML con el cual se puede reproducir el estado actual (previsualizado) del componente.
