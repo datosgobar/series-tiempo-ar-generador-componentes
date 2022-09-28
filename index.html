@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Series de Tiempo - Validador</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" media="all" />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/datosgobar/series-tiempo-ar-explorer@ts_components_2.9.0/dist/css/components.css"
+          type="text/css">
+
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/datosgobar/series-tiempo-ar-explorer@ts_components_2.9.0/dist/js/components.js'></script>
+
+    
+
+
+  <script type="module" crossorigin src="/series-tiempo-ar-generador-componentes/assets/index.ef7f2317.js"></script>
+  <link rel="stylesheet" href="/series-tiempo-ar-generador-componentes/assets/index.f45e0646.css">
+</head>
+<body>
+
+<header>
+    <nav class="navbar  navbar-default navbar-fixed-top pos-f-t  " role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <div class="navbar-collapse collapse">
+                    <a class=" nav navbar-brand" href="#" aria-label="Argentina.gob.ar Presidencia de la Nación">
+                        <img alt="Argentina.gob.ar" src="/series-tiempo-ar-generador-componentes/assets/argentinagob.32ef9441.svg" height="50">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="col-sm-1 m-t-4 pos-f-t " role="navigation"  >
+    <ul class="btn-title">
+        Formularios
+    </ul>
+    <ul class="nav nav-pills nav-stacked">
+        <li role="presentation"><a href="#card-header">TSComponents::Card</a></li>
+        <li role="presentation"><a href="#graph-header">TSComponents::Graph</a></li>
+    </ul>
+</div>
+<div class="container m-y-4">
+
+    <div class="index-header m-y-4">
+        <h3 class="text-primary " id="card-header">Formulario de previsualizacion Card</h3>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 mt-2">
+
+            <form id="form-card" action="" method="post">
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="serieId">Ingresar ID de la serie</label>
+                        <input  type="text"  class="form-control" name="serieId" required aria-required="true">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form"
+                         data-toggle="tooltip" title="Representan qué _locale_ usar para formatear números, es decir, separadores de miles o de decimales.">
+                        <label>Locale</label><br>
+                        <select name="locale" class="format form-control">
+                            <option value="AR">AR</option>
+                            <option value="US">US</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="links">Links</label>
+                        <select name="links" class="format form-control">
+                            <option value="full">full</option>
+                            <option value="small">small</option>
+                            <option value="none">None</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="exampleColorInput" class="form-label">Color picker</label>
+                        <input type="color" class="form-control form-control-color" name="color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label>Tipo de gráfico</label><br>
+                        <select name="hasChart" class="format form-control">
+                            <option value="full">full</option>
+                            <option value="small">small</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 item-form">
+                        <label for="explicitSignEnabled">Signo explícito</label>
+                        <div class="form-group item-form">
+                            <div class="radio">
+                                <label for="explicitSignEnabled">
+                                    <input type="radio" name="explicitSign" id="explicitSignEnabled" value="explicitSignEnabled" required="" aria-required="true">
+                                    Habilitado
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label for="explicitSignDisabled">
+                                    <input type="radio" name="explicitSign" id="explicitSignDisabled" value="explicitSignDisabled" required="" aria-required="true">
+                                    Deshabilitado
+                                </label>
+                            </div>
+                            <p class="help-block error hidden">Ingresá el dato</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="title">Ingresar Título</label>
+                        <input type="text" class="form-control" name="title" >
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="source">Fuente </label>
+                        <input type="text" class="form-control" name="source" >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="units">Unidades </label>
+                        <input type="text" class="form-control" name="units" >
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col-md-8 col-md-offset-2 item-form">
+                        <label for="hasFrameEnabled">Marco alrededor de card</label>
+                        <div class="form-group item-form">
+                            <div class="radio">
+                                <label for="hasFrameEnabled">
+                                    <input type="radio" name="hasFrame" id="hasFrameEnabled" value="hasFrameEnabled" required="" aria-required="true">
+                                    Habilitado
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label for="hasFrameDisabled">
+                                    <input type="radio" name="hasFrame" id="hasFrameDisabled" value="hasFrameDisabled" required="" aria-required="true">
+                                    Deshabilitado
+                                </label>
+                            </div>
+                            <p class="help-block error hidden">Ingresá el dato</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-md-8 col-md-offset-2 item-form">
+                        <label for="hasColorBarEnabled">Barra de color</label>
+                        <div class="form-group item-form">
+                            <div class="radio">
+                                <label for="hasColorBarEnabled">
+                                    <input type="radio" name="hasColorBar" id="hasColorBarEnabled" value="hasColorBarEnabled" required="" aria-required="true">
+                                    Habilitado
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label for="hasColorBarDisabled">
+                                    <input type="radio" name="hasColorBar" id="hasColorBarDisabled" value="hasColorBarDisabled" required="" aria-required="true">
+                                    Deshabilitado
+                                </label>
+                            </div>
+                            <p class="help-block error hidden">Ingresá el dato</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label>Frecuencia temporal</label><br>
+                        <select name="collapse" class="format form-control">
+                            <option value="day">Día</option>
+                            <option value="month">Mes</option>
+                            <option value="quarter">Trimestre</option>
+                            <option value="semester">Semestre</option>
+                            <option value="year">Año</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="apiBaseUrl">URL base </label>
+                        <input type="text" class="form-control" name="apiBaseUrl" >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="decimals">Número de decimales </label>
+                        <input type="number" class="form-control" name="decimals" value="2">
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-md-8 col-md-offset-2 item-form">
+                        <label for="numbersAbbreviateEnabled">Abreviar números</label>
+                        <div class="form-group item-form">
+                            <div class="radio">
+                                <label for="numbersAbbreviateEnabled">
+                                    <input type="radio" name="numbersAbbreviate" id="numbersAbbreviateEnabled" value="numbersAbbreviateEnabled" required="" aria-required="true">
+                                    Habilitado
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label for="numbersAbbreviateDisabled">
+                                    <input type="radio" name="numbersAbbreviate" id="numbersAbbreviateDisabled" value="numbersAbbreviateDisabled" required="" aria-required="true">
+                                    Deshabilitado
+                                </label>
+                            </div>
+                            <p class="help-block error hidden">Ingresá el dato</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="decimalsBillion">Número de decimales para numeros abreviados por un billón </label>
+                        <input type="number" class="form-control" name="decimalsBillion" value="2">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="decimalsMillion">Número de decimales para número abreviados por un millón</label>
+                        <input type="number" class="form-control" name="decimalsMillion" value="2">
+                    </div>
+                </div>
+
+                <div class="row ">
+
+                    <div class="col-md-8 col-md-offset-2 item-form">
+                        <label for="isPercentageEnabled">Valor porcentual</label>
+                        <div class="form-group item-form">
+                            <div class="radio">
+                                <label for="isPercentageEnabled">
+                                    <input type="radio" name="isPercentage" id="isPercentageEnabled" value="isPercentageEnabled" required="" aria-required="true">
+                                    Habilitado
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label for="isPercentageDisabled">
+                                    <input type="radio" name="isPercentage" id="isPercentageDisabled" value="isPercentageDisabled" required="" aria-required="true">
+                                    Deshabilitado
+                                </label>
+                            </div>
+                            <p class="help-block error hidden">Ingresá el dato</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </form>
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-sm-4 margin-60" >
+                <div id="card_example_1"></div>
+
+            </div>
+            <div class="col-sm-4 navbar-error" id="card-error-container">
+            </div>
+            <div class="col-sm-4 margin-60">
+                <input value="Actualizar vista previa" type="button" class="btn btn-primary" id="previewButtonCard">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 mt-2">
+            <input value="Generar HTML" type="button" class="btn btn-primary" id="generateCardHTML">
+        </div>
+        <div class="row" id="__code_0">
+            <div class="col-sm-12 codehilite">
+                                <pre class=" language-js">
+                                    <code id="codeTagCard">
+                                    </code>
+                                </pre>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="container">
+
+
+    <div class="row">
+
+        <div class="col-sm-8 m-y-4">
+            <div class="index-header m-y-4">
+                <h3 class="text-primary" id="graph-header">Formulario de previsualizacion Graph</h3>
+            </div>
+            <form id="form-graph" action="" method="post">
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label>Ingresar URL completa de llamado a api series</label>
+                        <input  type="text"  class="form-control" name="graphicUrl" required aria-required="true">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form"
+                         data-toggle="tooltip" title="Representan qué _locale_ usar para formatear números, es decir, separadores de miles o de decimales.">
+                        <label>Locale</label><br>
+                        <select name="locale" class="format form-control">
+                            <option value="AR">AR</option>
+                            <option value="US">US</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <fieldset>
+                    <div class="row">
+
+                        <div class="col-md-8 col-md-offset-2  item-form">
+                            <label for="navigatorEnabled">Navegación de la serie</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="navigatorEnabled">
+                                        <input type="radio" name="navigator" id="navigatorEnabled" value="navigatorEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="navigatorDisabled">
+                                        <input type="radio" name="navigator" id="navigatorDisabled" value="navigatorDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label >Ingresar Título</label>
+                        <input type="text" class="form-control" name="title_graph" >
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label >Fuente </label>
+                        <input type="text" class="form-control" name="source_graph" >
+                    </div>
+                </div>
+
+                <fieldset>
+                    <div class="row">
+
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="zoomEnabled">Habilitar zoom</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="zoomEnabled">
+                                        <input type="radio" name="zoom" id="zoomEnabled" value="zoomEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="zoomDisabled">
+                                        <input type="radio" name="zoom" id="zoomDisabled" value="zoomDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="row">
+
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="exportableEnabled">Exportar gráfico</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="exportableEnabled">
+                                        <input type="radio" name="exportable" id="exportableEnabled" value="exportableEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="exportableDisabled">
+                                        <input type="radio" name="exportable" id="exportableDisabled" value="exportableDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label class="form-label">Paleta de colores</label>
+                        <input type="color" class="form-control form-control-color" name="colorPalette0"  value="#0072BB" title="Choose your color">
+                        <input type="color" class="form-control form-control-color" name="colorPalette1"  value="#2E7D33" title="Choose your color">
+                        <input type="color" class="form-control form-control-color" name="colorPalette2"  value="#C62828" title="Choose your color">
+                        <input type="color" class="form-control form-control-color" name="colorPalette3"  value="#F9A822" title="Choose your color">
+                        <input type="color" class="form-control form-control-color" name="colorPalette4"  value="#6A1B99" title="Choose your color">
+                        <input type="color" class="form-control form-control-color" name="colorPalette5"  value="#EC407A" title="Choose your color">
+                        <input type="color" class="form-control form-control-color" name="colorPalette6"  value="#C2185B" title="Choose your color">
+                        <input type="color" class="form-control form-control-color" name="colorPalette7"  value="#039BE5" title="Choose your color">
+                        <input type="color" class="form-control form-control-color" name="colorPalette8"  value="#6EA100" title="Choose your color">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label class="form-label">Color de fondo</label>
+                        <input type="color" class="form-control form-control-color" name="backgroundColor"  value="#ffffff" title="Choose your color">
+                    </div>
+                </div>
+
+
+                <fieldset>
+                    <div class="row">
+
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="datePickerEnabled">Habilitar selector de fechas</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="datePickerEnabled">
+                                        <input type="radio" name="datePickerEnabled" id="datePickerEnabled" value="datePickerEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="datePickerDisabled">
+                                        <input type="radio" name="datePickerEnabled" id="datePickerDisabled" value="datePickerDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label>Campo de la serie a utilizar como leyenda</label><br>
+                        <select name="legendField" class="format form-control">
+                            <option value="title">Título</option>
+                            <option value="description">Descripción</option>
+                            <option value="id">Id</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for='chartTypesBySeries'>Tipo de gráfico por serie </label><br>
+                        <div  id="chartTypesBySeries" class="col-md-offset-1">
+                            <label class="text-info"> Generar una vista previa para habilitar esta funcionalidad</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <fieldset>
+                    <div class="row">
+
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="displayUnitsEnabled">Mostrar unidades</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="displayUnitsEnabled">
+                                        <input type="radio" name="displayUnits" id="displayUnitsEnabled" value="displayUnitsEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="displayUnitsDisabled">
+                                        <input type="radio" name="displayUnits" id="displayUnitsDisabled" value="displayUnitsDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form" >
+                        <label for="legendLabelBySeries"> Texto en leyenda para cada serie</label>
+
+                        <div id="legendLabelBySeries" class="col-md-offset-1">
+                            <label class="text-info"> Generar una vista previa para habilitar esta funcionalidad</label>
+
+                            <!--                            TODO: generar de manera dinamica tantos inputs como series haya-->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="seriesAxisBySeries">Ubicación del eje de las series</label><br>
+                        <div id="seriesAxisBySeries" class="col-md-offset-1">
+                            <label class="text-info"> Generar una vista previa para habilitar esta funcionalidad</label>
+
+                            <!--                            TODO: generar de manera dinamica tantos inputs como series haya-->
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label>Tipo de gráfico default (válido para las que no se indique ningun tipo especifico en el select anterior)</label><br>
+                        <select name="chartType" class="format form-control">
+                            <option value="line">Línea</option>
+                            <option value="area">Área</option>
+                            <option value="column">Columna</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label >Número de decimales eje principal </label>
+                        <input type="number" class="form-control" name="decimalLeftAxis" >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label >Número de decimales eje auxiliar</label>
+                        <input type="number" class="form-control" name="decimalRightAxis">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label for="decimalTooltipsBySeries">Cantidad de decimales en tooltip para cada serie</label><br>
+                        <!--                            TODO: generar de manera dinamica tantos selects como series haya-->
+                        <div id="decimalTooltipsBySeries" class="col-md-offset-1">
+                            <label class="text-info"> Generar una vista previa para habilitar esta funcionalidad</label>
+
+                            <!--                            TODO: generar de manera dinamica tantos inputs como series haya-->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label>Cantidad de decimales en tooltip default</label><br>
+                        <!--                            TODO: generar de manera dinamica tantos selects como series haya-->
+                        <input type="number" class="form-control" name="decimalTooltip" >
+                    </div>
+                </div>
+
+
+                <fieldset>
+                    <div class="row">
+
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="numbersAbbreviateEnabledGraph">Abreviatura de números</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="numbersAbbreviateEnabledGraph">
+                                        <input type="radio" name="numbersAbbreviate" id="numbersAbbreviateEnabledGraph" value="numbersAbbreviateEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="numbersAbbreviateDisabledGraph">
+                                        <input type="radio" name="numbersAbbreviate" id="numbersAbbreviateDisabledGraph" value="numbersAbbreviateDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label >Número de decimales para numeros abreviados por un billón </label>
+                        <input type="number" class="form-control" name="decimalsBillion" value="2">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 form-group item-form">
+                        <label >Número de decimales para número abreviados por un millón</label>
+                        <input type="number" class="form-control" name="decimalsMillion" value="2">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-offset-2 col-md-4 item-form">
+                        <label >Fecha de inicio</label>
+                        <p class="help-block">Sin guiones ni barras</p>
+
+                        <input type="date" class="form-control" id="startDate" name="startDate" required="" aria-required="true">
+                        <p class="help-block error hidden">Ingresá una fecha válida</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-offset-2 col-md-4 item-form">
+                        <label >Fecha de fin</label>
+                        <!--                            TODO: set default (y minimum maximum) como la fecha mas reciente/valor seteado en campo atnerior de la serie-->
+                        <p class="help-block">Sin guiones ni barras</p>
+                        <input type="date" class="form-control" id="endDate" name="endDate" required="" aria-required="true">
+                        <p class="help-block error hidden">Ingresá una fecha válida</p>
+                    </div>
+                </div>
+
+                <fieldset>
+                    <div class="row">
+
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="frequencySelectorEnabled">Habilitar selector de frecuencias</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="frequencySelectorEnabled">
+                                        <input type="radio" name="frequencySelector" id="frequencySelectorEnabled" value="frequencySelectorEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="frequencySelectorDisabled">
+                                        <input type="radio" name="frequencySelector" id="frequencySelectorDisabled" value="frequencySelectorDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="row">
+
+                        <div class="col-md-8  col-md-offset-2 item-form">
+                            <label for="aggregationSelectorEnabled">Habilitar selector de tipo de agregación.</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="aggregationSelectorEnabled">
+                                        <input type="radio" name="aggregationSelector" id="aggregationSelectorEnabled" value="aggregationSelectorEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="aggregationSelectorDisabled">
+                                        <input type="radio" name="aggregationSelector" id="aggregationSelectorDisabled" value="aggregationSelectorDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="row">
+
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="unitsSelectorEnabled">Habilitar selector de unidades</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="unitsSelectorEnabled">
+                                        <input type="radio" name="unitsSelector" id="unitsSelectorEnabled" value="unitsSelectorEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="unitsSelectorDisabled">
+                                        <input type="radio" name="unitsSelector" id="unitsSelectorDisabled" value="unitsSelectorDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="row">
+
+                        <div class="col-md-8 col-md-offset-2 item-form">
+                            <label for="chartTypeSelectorEnabled">Habilitar selector de tipo de gráfico a dibujar para las series involucradas. (válido para series sin tipo de gráfico especificado antes)</label>
+                            <div class="form-group item-form">
+                                <div class="radio">
+                                    <label for="chartTypeSelectorEnabled">
+                                        <input type="radio" name="chartTypeSelector" id="chartTypeSelectorEnabled" value="chartTypeSelectorEnabled" required="" aria-required="true">
+                                        Habilitado
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="chartTypeSelectorDisabled">
+                                        <input type="radio" name="chartTypeSelector" id="chartTypeSelectorDisabled" value="chartTypeSelectorDisabled" required="" aria-required="true">
+                                        Deshabilitado
+                                    </label>
+                                </div>
+                                <p class="help-block error hidden">Ingresá el dato</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+
+
+
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-offset-2 margin-60" >
+            <div id="graph_example_1"></div>
+        </div>
+        <div class="col-sm-12  navbar-error" id="graph-error-container">
+        </div>
+        <div class="col-sm-12 col-md-offset-1 margin-60">
+            <input value="Actualizar vista previa" type="button" class="btn btn-primary" id="previewButtonGraph">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-offset-1 col-md-offset-2 mt-2">
+            <input value="Generar HTML" type="button" class="btn btn-primary" id="generateGraphHTML">
+        </div>
+        <div class="row" id="__code_0">
+            <div class="col-sm-12 col-md-offset-1 codehilite">
+                                <pre class=" language-js">
+                                    <code id="codeTagGraph">
+                                    </code>
+                                </pre>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>
